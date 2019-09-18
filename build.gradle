@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+group = 'me.d4rk'
+version = '1.0'
+description = "Bonde do Fracasso's Discord Bot"
+mainClassName = 'me.d4rk.fracassadobot.Bot'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(AbstractCompile) {
+    classpath += configurations.shadow
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
+dependencies {
+    compile group: 'net.dv8tion', name: 'JDA', version:'4.0.0_46'
+    compile group: 'com.konghq', name:'unirest-java', version:'2.3.10'
+    compile group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.3.3'
+}
+
+shadowJar {
+    baseName = 'FracassadoBot-Release'
+    version = 1.0
+}
