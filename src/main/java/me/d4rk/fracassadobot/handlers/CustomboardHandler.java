@@ -26,7 +26,7 @@ public class CustomboardHandler {
             if(getQuantity(event, cb.getEmote()) >= cb.getMinimum()) {
                 Message msg = event.getChannel().retrieveMessageById(event.getMessageId()).complete();
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setAuthor(msg.getAuthor().getName()+"#"+msg.getAuthor().getDiscriminator(), null, msg.getAuthor().getAvatarUrl())
+                        .setAuthor(msg.getAuthor().getName()+"#"+msg.getAuthor().getDiscriminator(), msg.getJumpUrl(), msg.getAuthor().getAvatarUrl())
                         .setTitle(cb.getEmote()+" | "+getQuantity(event, cb.getEmote()))
                         .setDescription(msg.getContentRaw())
                         .setFooter("Message sent on #"+msg.getChannel().getName(), null)

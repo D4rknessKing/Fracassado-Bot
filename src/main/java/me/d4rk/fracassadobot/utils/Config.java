@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 
 public class Config {
 
+    public static String suggestionsChannel = null;
     public static String loggingChannel = null;
     public static String prefix = null;
     public static String defaultPlaying = null;
@@ -35,6 +36,7 @@ public class Config {
 
         JSONObject json = new JSONObject(jsons);
 
+        try{suggestionsChannel = json.getString("suggestionsChannel");}catch(Exception ignored){}
         try{loggingChannel = json.getString("loggingChannel");}catch(Exception ignored){}
         try{prefix = json.getString("prefix");}catch(Exception ignored){}
         try{defaultPlaying = json.getString("defaultPlaying");}catch(Exception ignored){}
@@ -49,6 +51,7 @@ public class Config {
         Path globalDataPath = Paths.get(getConfigFile().getAbsolutePath());
 
         JSONObject jfile = new JSONObject();
+        jfile.put("suggestionsChannel","");
         jfile.put("loggingChannel", "");
         jfile.put("prefix", "");
         jfile.put("defaultPlaying", "");
