@@ -12,14 +12,16 @@ public class GuildMessageListener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-        if(RankSystemHandler.isSystemEnabled(event.getGuild().getId()) && !event.getAuthor().isBot() && !event.getAuthor().isFake()) {
-            long time = System.currentTimeMillis();
-            RankSystemHandler.updateUser(event.getGuild().getId(), event.getAuthor().getId());
+        if(!event.getAuthor().isBot() && !event.getAuthor().isFake()){
             if(event.getChannel().getId().equals(Config.suggestionsChannel)){
                 event.getMessage().addReaction("\uD83D\uDC4D").queue();
                 event.getMessage().addReaction("\uD83D\uDC4E").queue();
             }
-            if(System.currentTimeMillis()-time > 0) System.out.println("Message by "+event.getAuthor().getName()+" took "+(System.currentTimeMillis()-time)+"ms to process.");
+            if(RankSystemHandler.isSystemEnabled(event.getGuild().getId())) {
+                long time = System.currentTimeMillis();
+                RankSystemHandler.updateUser(event.getGuild().getId(), event.getAuthor().getId());
+                if(System.currentTimeMillis()-time > 0) System.out.println("Message by "+event.getAuthor().getName()+" took "+(System.currentTimeMillis()-time)+"ms to process.");
+            }
         }
         CommandHandler.handle(event);
         Stats.readMessages++;
