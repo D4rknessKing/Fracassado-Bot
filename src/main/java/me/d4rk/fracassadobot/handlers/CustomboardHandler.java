@@ -26,10 +26,10 @@ public class CustomboardHandler {
             if(getQuantity(event, cb.getEmote()) >= cb.getMinimum()) {
                 Message msg = event.getChannel().retrieveMessageById(event.getMessageId()).complete();
                 EmbedBuilder embed = new EmbedBuilder()
-                        .setAuthor(msg.getAuthor().getName()+"#"+msg.getAuthor().getDiscriminator(), msg.getJumpUrl(), msg.getAuthor().getAvatarUrl())
+                        .setAuthor(msg.getAuthor().getName()+"#"+msg.getAuthor().getDiscriminator(), null, msg.getAuthor().getAvatarUrl())
                         .setTitle(cb.getEmote()+" | "+getQuantity(event, cb.getEmote()))
                         .setDescription(msg.getContentRaw())
-                        .setFooter("Message sent on #"+msg.getChannel().getName(), null)
+                        .setFooter("Message sent on #"+msg.getChannel().getName(), msg.getJumpUrl())
                         .setTimestamp(msg.getTimeCreated())
                         .setColor(new Color(255, 172, 51));
                 if(msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) embed.setImage(msg.getAttachments().get(0).getUrl());
