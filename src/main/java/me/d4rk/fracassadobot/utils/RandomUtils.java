@@ -1,6 +1,21 @@
 package me.d4rk.fracassadobot.utils;
 
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+
+import java.util.List;
+
 public class RandomUtils {
+
+    public static Member getMember(GuildMessageReceivedEvent event) {
+        Member mem = null;
+        String string = event.getMessage().getContentRaw();
+        if (event.getMessage().getMentionedUsers().size() >= 1) mem = event.getMessage().getMentionedMembers().get(0);
+        List<Member> ata2 = event.getGuild().getMembersByNickname(string, false);
+        if (ata2.size() >= 1) mem = ata2.get(0);
+        return mem;
+    }
+
 
     public static String getFullStacktrace(Exception e) {
         StringBuilder str = new StringBuilder();

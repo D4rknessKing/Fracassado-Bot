@@ -3,6 +3,8 @@ package me.d4rk.fracassadobot.listeners;
 import me.d4rk.fracassadobot.Bot;
 import me.d4rk.fracassadobot.handlers.CommandHandler;
 import me.d4rk.fracassadobot.handlers.RankSystemHandler;
+import me.d4rk.fracassadobot.handlers.postcommandrequest.PostCommandRequest;
+import me.d4rk.fracassadobot.handlers.postcommandrequest.PostCommandRequestHandler;
 import me.d4rk.fracassadobot.utils.Config;
 import me.d4rk.fracassadobot.utils.Stats;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -22,8 +24,12 @@ public class GuildMessageListener extends ListenerAdapter {
                 RankSystemHandler.updateUser(event.getGuild().getId(), event.getAuthor().getId());
                 if(System.currentTimeMillis()-time > 0) System.out.println("Message by "+event.getAuthor().getName()+" took "+(System.currentTimeMillis()-time)+"ms to process.");
             }
+            if(PostCommandRequestHandler.getActivePcr().get(event.getAuthor().getId()) != null) {
+                PostCommandRequestHandler.handle(event);
+            }else{
+                CommandHandler.handle(event);
+            }
         }
-        CommandHandler.handle(event);
         Stats.readMessages++;
         if(event.getAuthor() == Bot.jda.getSelfUser()) Stats.sendMessages++;
     }

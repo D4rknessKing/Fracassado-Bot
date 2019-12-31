@@ -7,7 +7,7 @@ public class CommandRegistry {
     public static void registerCmds() {
         CommandRegister.register(CmdCustomboard.class);
         CommandRegister.register(CmdReactionrole.class);
-        CommandRegister.register(CmdRank.class);
+        CommandRegister.register(CmdRanksystem.class);
         CommandRegister.register(CmdColor.class);
         CommandRegister.register(CmdGuild.class);
         CommandRegister.register(CmdHelp.class);
@@ -21,6 +21,11 @@ public class CommandRegistry {
         CommandRegister.register(CmdShutdown.class);
         CommandRegister.register(CmdStats.class);
         CommandRegister.register(CmdUser.class);
+        CommandRegister.register(CmdProfile.class);
+        CommandRegister.register(CmdTop.class);
+        CommandRegister.register(CmdDaily.class);
+        CommandRegister.register(CmdShop.class);
+        CommandRegister.register(CmdItem.class);
     }
 
 }

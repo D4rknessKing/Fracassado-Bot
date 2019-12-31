@@ -2,6 +2,7 @@ package me.d4rk.fracassadobot.handlers;
 
 import com.rethinkdb.gen.ast.Get;
 import me.d4rk.fracassadobot.Bot;
+import me.d4rk.fracassadobot.utils.Config;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -20,7 +21,7 @@ public class RankSystemHandler {
 
     public static boolean isSystemEnabled(String guildId) {
         if(guildStatus.get(guildId) == null) {
-            HashMap map = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId).run(DataHandler.conn);
+            HashMap map = DataHandler.database.table("guildRankSystem").get(guildId).run(DataHandler.conn);
 
             if(map == null) {
                 guildStatus.put(guildId, false);
@@ -35,14 +36,14 @@ public class RankSystemHandler {
     }
 
     public static void enableSystem(String guildId) {
-        HashMap map = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId).run(DataHandler.conn);
+        HashMap map = DataHandler.database.table("guildRankSystem").get(guildId).run(DataHandler.conn);
 
         if(map == null)
-            DataHandler.r.db("fracassadobot").table("guildRankSystem").insert(
+            DataHandler.database.table("guildRankSystem").insert(
                 DataHandler.r.hashMap("id", guildId).with("enabled", true)
             ).run(DataHandler.conn);
         else
-            DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId).update(
+            DataHandler.database.table("guildRankSystem").get(guildId).update(
                     DataHandler.r.hashMap("enabled", true)
             ).run(DataHandler.conn);
 
@@ -52,7 +53,7 @@ public class RankSystemHandler {
 
     public static void disableSystem(String guildId) {
         if(isSystemEnabled(guildId)) {
-            DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId).update(
+            DataHandler.database.table("guildRankSystem").get(guildId).update(
                     DataHandler.r.hashMap("enabled", false)
             ).run(DataHandler.conn);
             guildStatus.put(guildId, false);
@@ -61,7 +62,7 @@ public class RankSystemHandler {
 
     public static void resetEntries(String guildId) {
         if(isSystemEnabled(guildId)) {
-            DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId).replace(
+            DataHandler.database.table("guildRankSystem").get(guildId).replace(
                     row -> row.without("entries")
             ).run(DataHandler.conn);
         }
@@ -81,7 +82,7 @@ public class RankSystemHandler {
     }
 
     public static void setUserPoints(String guildId, String userId, long points) {
-        Get request = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId);
+        Get request = DataHandler.database.table("guildRankSystem").get(guildId);
         HashMap map = request.run(DataHandler.conn);
         HashMap entries = (HashMap) map.get("entries");
 
@@ -94,7 +95,7 @@ public class RankSystemHandler {
 
         long last = getCooldown(userId), eq = ((System.currentTimeMillis()-last))/10000;
         if(eq >= 1 && isSystemEnabled(guildId)) {
-            Get request = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId);
+            Get request = DataHandler.database.table("guildRankSystem").get(guildId);
             HashMap map = request.run(DataHandler.conn);
             HashMap entries = (HashMap) map.get("entries");
 
@@ -140,23 +141,23 @@ public class RankSystemHandler {
     }
 
     public static void addRole(String guildId, String roleId, long points) {
-        DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId).update(
+        DataHandler.database.table("guildRankSystem").get(guildId).update(
                 DataHandler.r.hashMap("roles", DataHandler.r.hashMap(roleId, points))
         ).run(DataHandler.conn);
     }
 
     public static void removeRole(String guildId, String roleId) {
-        Get request = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId);
+        Get request = DataHandler.database.table("guildRankSystem").get(guildId);
         HashMap map = request.run(DataHandler.conn);
         HashMap roles = (HashMap) map.get("roles");
         roles.remove(roleId);
-        DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId).update(
+        DataHandler.database.table("guildRankSystem").get(guildId).update(
                 DataHandler.r.hashMap("roles", roles)
         ).run(DataHandler.conn);
     }
 
     public static HashMap<String, Long> getRoles(String guildId) {
-        Get request = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId);
+        Get request = DataHandler.database.table("guildRankSystem").get(guildId);
         HashMap map = request.run(DataHandler.conn);
         HashMap roles = (HashMap) map.get("roles");
 
@@ -165,7 +166,7 @@ public class RankSystemHandler {
     }
 
     public static HashMap<String, Long> getEntries(String guildId) {
-        Get request = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId);
+        Get request = DataHandler.database.table("guildRankSystem").get(guildId);
         HashMap map = request.run(DataHandler.conn);
         HashMap entries = (HashMap) map.get("entries");
 
@@ -174,7 +175,7 @@ public class RankSystemHandler {
     }
 
     public static long getPoints(String guildId, String userId) {
-        Get request = DataHandler.r.db("fracassadobot").table("guildRankSystem").get(guildId);
+        Get request = DataHandler.database.table("guildRankSystem").get(guildId);
         HashMap map = request.run(DataHandler.conn);
         HashMap entries = (HashMap) map.get("entries");
 

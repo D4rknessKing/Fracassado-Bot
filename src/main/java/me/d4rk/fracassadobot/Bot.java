@@ -18,9 +18,9 @@ public class Bot {
 
     public static void main(String[] args) {
 
+        Config.loadConfig();
         DataHandler.connect("localhost", 28015);
         CommandRegistry.registerCmds();
-        Config.loadConfig();
 
         try {
             jda = new JDABuilder()
