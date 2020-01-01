@@ -1,16 +1,17 @@
 package me.d4rk.fracassadobot.handlers;
 
 import com.rethinkdb.gen.ast.Get;
+import javafx.util.Pair;
 import me.d4rk.fracassadobot.Bot;
+import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
+import me.d4rk.fracassadobot.handlers.economy.EconomyThread;
+import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
 import me.d4rk.fracassadobot.utils.Config;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -108,6 +109,24 @@ public class RankSystemHandler {
                 if(eq > 3) points += 10;
                 else points += eq*3;
                 updateUserCooldown(userId);
+
+                //BUFF HANDLING
+                for(Pair<String, Long> pair : EconomyThread.getCachedEffects(guildId, userId)) {
+                    switch(pair.getKey()) {
+                        case "BUFF_XP2":
+                            points *= 2;
+                            break;
+                        case "DEBUFF_XP50":
+                            points *= 0.5;
+                            break;
+                        case "DEBUFF_XP100":
+                            points = 0;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 request.update(
                         DataHandler.r.hashMap("entries", DataHandler.r.hashMap(userId, points))
                 ).run(DataHandler.conn);

@@ -32,10 +32,8 @@ public class PostCommandRequestHandler {
                 if(member != null) {
                     EconomyUser user = EconomySystemHandler.getUser(event.getGuild().getId(), member.getId());
                     boolean containsEffect = false;
-                    System.out.println(user.getEffects());
                     for(Pair<String, Long> effect : user.getEffects()) {
                         if(EconomyItem.valueOf(pcr.getInfo()).getEffect().name().equals(effect.getKey())) containsEffect = true;
-                        System.out.println(EconomyItem.valueOf(pcr.getInfo()).getEffect().name()+" - "+effect.getKey());
                     }
                     if(containsEffect) {
                         event.getChannel().sendMessage("**O usuario já possui um debuff desse tipo ativo!**").queue();
@@ -50,11 +48,12 @@ public class PostCommandRequestHandler {
                         }
                         if(containsCooldown) {
                             event.getChannel().sendMessage("**O usuario foi afetado por um debuff desse tipo a pouco tempo! Aguarde mais "+(cooldownLeft/60000)+" minutos antes de usar um debuff desse tipo novamente! **").queue();
+                        }else{
+                            EconomySystemHandler.useItem(event.getGuild().getId(), event.getAuthor().getId(), member.getId(), EconomyItem.valueOf(pcr.getInfo()));
+                            event.getChannel().sendMessage("**O item foi utilizado com sucesso!**").queue();
                         }
-                        EconomySystemHandler.useItem(event.getGuild().getId(), event.getAuthor().getId(), member.getId(), EconomyItem.valueOf(pcr.getInfo()));
-                        event.getChannel().sendMessage("**O item foi utilizado com sucesso!**").queue();
-                        success = true;
                     }
+                    success = true;
                 }
                 break;
             case "USE_TRASHDAY":

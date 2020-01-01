@@ -35,7 +35,7 @@ public class CmdItem {
                         System.out.println(wantedItem.getEffect().name()+" - "+effect.getKey());
                     }
                     if(containsEffect) {
-                        event.getChannel().sendMessage("**O usuario já possui um debuff desse tipo ativo!**").queue();
+                        event.getChannel().sendMessage("**O usuario já possui um buff desse tipo ativo!**").queue();
                     }else{
                         EconomySystemHandler.useItem(event.getGuild().getId(), event.getAuthor().getId(), event.getAuthor().getId(), wantedItem);
                         event.getChannel().sendMessage("**O item foi utilizado com sucesso!**").queue();

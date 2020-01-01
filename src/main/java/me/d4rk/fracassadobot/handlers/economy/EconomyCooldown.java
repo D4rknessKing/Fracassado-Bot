@@ -2,7 +2,7 @@ package me.d4rk.fracassadobot.handlers.economy;
 
 public enum EconomyCooldown {
 
-    DEBUFF_MUTE(21600000);
+    DEBUFF_MUTE(7200000);
 
     private final long cooldown;
 

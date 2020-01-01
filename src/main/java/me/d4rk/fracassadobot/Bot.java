@@ -1,8 +1,7 @@
 package me.d4rk.fracassadobot;
 
-import com.rethinkdb.RethinkDB;
-import com.rethinkdb.net.Connection;
 import me.d4rk.fracassadobot.handlers.DataHandler;
+import me.d4rk.fracassadobot.handlers.economy.EconomyThread;
 import me.d4rk.fracassadobot.listeners.GuildMessageListener;
 import me.d4rk.fracassadobot.listeners.GuildReactionListener;
 import me.d4rk.fracassadobot.utils.Config;
@@ -30,6 +29,8 @@ public class Bot {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        EconomyThread.start();
 
         if(Config.isStreaming) {
             jda.getPresence().setPresence(Activity.streaming(Config.defaultPlaying, "https://twitch.tv/"), false);

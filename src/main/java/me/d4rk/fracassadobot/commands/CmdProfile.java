@@ -1,8 +1,7 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.handlers.economy.EconomyItem;
-import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
+import javafx.util.Pair;
+import me.d4rk.fracassadobot.handlers.economy.*;
 import me.d4rk.fracassadobot.handlers.RankSystemHandler;
 import me.d4rk.fracassadobot.utils.EnumPerms;
 import me.d4rk.fracassadobot.utils.command.Command;
@@ -32,11 +31,9 @@ public class CmdProfile {
 
         Message message = event.getChannel().sendMessage("Please wait while we profile "+mem.getEffectiveName()+".").complete();
         StringBuilder string = new StringBuilder();
-        EconomyUser economyUser = EconomySystemHandler.getUser(event.getGuild().getId(), event.getAuthor().getId());
+        EconomyUser economyUser = EconomySystemHandler.getUser(event.getGuild().getId(), mem.getId());
 
-        if(!RankSystemHandler.isSystemEnabled(event.getGuild().getId())){
-            event.getChannel().sendMessage("**Error: **The rank system is not enabled in this guild.").queue();
-        }else{
+        if(RankSystemHandler.isSystemEnabled(event.getGuild().getId())) {
             HashMap entries = RankSystemHandler.getEntries(event.getGuild().getId());
             if(!(entries.entrySet().size() == 0 || !entries.containsKey(mem.getId()))) {
                 StringBuilder rank = new StringBuilder();
@@ -80,11 +77,23 @@ public class CmdProfile {
         }
 
         EmbedBuilder embedBuilder = new EmbedBuilder()
-                .setAuthor(event.getMember().getEffectiveName()+"'s Profile:", null, event.getGuild().getIconUrl())
+                .setAuthor(mem.getEffectiveName()+"'s Profile:", null, event.getGuild().getIconUrl())
                 .setThumbnail(mem.getUser().getAvatarUrl())
                 .addField("Money:", economyUser.getMoney()+" FracassoCoins", true)
                 .setColor(mem.getColor())
                 .setFooter("Requested by: " + event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator(), event.getAuthor().getAvatarUrl());
+
+        if(economyUser.getEffects().size() > 0) {
+            StringBuilder efeitos = new StringBuilder();
+            for (Pair<String, Long> pair : economyUser.getEffects()) {
+                EconomyEffect effect = null;
+                try{effect = EconomyEffect.valueOf(pair.getKey());}catch (Exception ignored){}
+                if(efeitos.length() > 0) efeitos.append(",   ");
+                if(effect == null) efeitos.append("**:interrobang: Efeito Desconhecido**");
+                else efeitos.append(effect.getItem().getEmote()).append(" (").append((pair.getValue()-System.currentTimeMillis())/60000).append(" Min)");
+            }
+            embedBuilder.addField("Effects: ", efeitos.toString(), true);
+        }
 
         if (string.length() > 0) embedBuilder.addField("Point system:", string.toString(), false);
         if (economyUser.getInventory().size() > 0) {

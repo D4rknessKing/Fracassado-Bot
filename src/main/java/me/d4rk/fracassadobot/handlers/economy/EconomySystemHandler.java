@@ -5,6 +5,7 @@ import com.rethinkdb.model.MapObject;
 import javafx.util.Pair;
 import me.d4rk.fracassadobot.handlers.DataHandler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,14 +13,50 @@ public class EconomySystemHandler {
 
     public static Table economyTable = DataHandler.database.table("guildEconomy");
 
+    public static List<EconomyUser> getUsers(String guildId) {
+        checkSystem(guildId);
+        HashMap map = economyTable.get(guildId).run(DataHandler.conn);
+        List<EconomyUser> userList = new ArrayList<>();
+        for(Object key : map.keySet()) {
+            if(map.get(key) instanceof HashMap) {
+                HashMap userMap = (HashMap) map.get(key);
+                List<Pair<String, Long>> userEffects = new ArrayList<>(), userCooldown = new ArrayList<>();
+                for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("effects")) {
+                    userEffects.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
+                }
+                for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("cooldown")) {
+                    userCooldown.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
+                }
+                userList.add(
+                    new EconomyUser(
+                        key.toString(),
+                        (long) userMap.get("money"),
+                        (long) userMap.get("lastDaily"),
+                        ((Long) userMap.get("streak")).intValue(),
+                        (long) userMap.get("lastStreak"),
+                        (List<String>) userMap.get("inventory"),
+                        userEffects,
+                        userCooldown
+                ));
+            }
+        }
+        return userList;
+    }
+
     public static EconomyUser getUser(String guildId, String userId) {
         checkSystem(guildId);
         HashMap map = economyTable.get(guildId).run(DataHandler.conn);
         Object user = map.get(userId);
-        List<Pair<String, Long>> userEffects, userCooldown;
 
         if(user != null) {
             HashMap userMap = (HashMap) user;
+            List<Pair<String, Long>> userEffects = new ArrayList<>(), userCooldown = new ArrayList<>();
+            for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("effects")) {
+                userEffects.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
+            }
+            for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("cooldown")) {
+                userCooldown.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
+            }
             return new EconomyUser(
                     userId,
                     (long) userMap.get("money"),
@@ -27,11 +64,10 @@ public class EconomySystemHandler {
                     ((Long) userMap.get("streak")).intValue(),
                     (long) userMap.get("lastStreak"),
                     (List<String>) userMap.get("inventory"),
-                    (List<Pair<String, Long>>) userMap.get("effects"),
-                    (List<Pair<String, Long>>) userMap.get("cooldown")
+                    userEffects,
+                    userCooldown
             );
-        }
-        else {
+        } else {
             createUser(guildId, userId);
             return getUser(guildId, userId);
         }
@@ -68,7 +104,7 @@ public class EconomySystemHandler {
             ).run(DataHandler.conn);
         }else{
             DataHandler.database.table("guildEconomy").get(guildId).update(
-                    DataHandler.r.hashMap(userId, DataHandler.r.hashMap("inventory", userInventory)).with(receiverId, DataHandler.r.hashMap("effects", receiverEffects))
+                    DataHandler.r.hashMap(userId, DataHandler.r.hashMap("inventory", userInventory)).with(receiverId, DataHandler.r.hashMap("effects", receiverEffects).with("cooldown", receiverCooldown))
             ).run(DataHandler.conn);
         }
     }
