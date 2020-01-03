@@ -3,6 +3,7 @@ package me.d4rk.fracassadobot.commands;
 import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
 import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
 import me.d4rk.fracassadobot.utils.EnumPerms;
+import me.d4rk.fracassadobot.utils.RandomUtils;
 import me.d4rk.fracassadobot.utils.command.Command;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -47,8 +48,8 @@ public class CmdDaily {
             EconomySystemHandler.updateDaily(event.getGuild().getId(), event.getAuthor().getId(), false);
             event.getChannel().sendMessage(string.toString()).queue();
         }else{
-            long timeLeft = (86400000-(System.currentTimeMillis() - user.getLastDaily()))/60000;
-            event.getChannel().sendMessage(":x: **Você ainda precisa esperar :clock4: _"+timeLeft+" minutos_ :clock4: para pegar o seu daily**").queue();
+            long timeLeft = 86400000-(System.currentTimeMillis() - user.getLastDaily());
+            event.getChannel().sendMessage(":x: **Você ainda precisa esperar :clock4: _"+ RandomUtils.getTime(timeLeft) +"_ :clock4: para pegar o seu daily**").queue();
         }
     }
 

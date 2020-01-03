@@ -24,7 +24,6 @@ public class PostCommandRequestHandler {
 
     public static void handle(GuildMessageReceivedEvent event) {
         PostCommandRequest pcr = PostCommandRequestHandler.activePcr.get(event.getAuthor().getId());
-        boolean success = false;
 
         switch (pcr.getId()) {
             case "USE_DEBUFF":
@@ -47,13 +46,12 @@ public class PostCommandRequestHandler {
                             }
                         }
                         if(containsCooldown) {
-                            event.getChannel().sendMessage("**O usuario foi afetado por um debuff desse tipo a pouco tempo! Aguarde mais "+(cooldownLeft/60000)+" minutos antes de usar um debuff desse tipo novamente! **").queue();
+                            event.getChannel().sendMessage("**O usuario foi afetado por um debuff desse tipo a pouco tempo! Aguarde mais :clock4: _"+ RandomUtils.getTime(cooldownLeft) +"_ :clock4:_ antes de usar um debuff desse tipo novamente! **").queue();
                         }else{
                             EconomySystemHandler.useItem(event.getGuild().getId(), event.getAuthor().getId(), member.getId(), EconomyItem.valueOf(pcr.getInfo()));
                             event.getChannel().sendMessage("**O item foi utilizado com sucesso!**").queue();
                         }
                     }
-                    success = true;
                 }
                 break;
             case "USE_TRASHDAY":
@@ -62,7 +60,6 @@ public class PostCommandRequestHandler {
                 break;
         }
 
-        if(!success) event.getChannel().sendMessage(pcr.getErrorMessage()).queue();
         activePcr.remove(event.getAuthor().getId());
     }
 

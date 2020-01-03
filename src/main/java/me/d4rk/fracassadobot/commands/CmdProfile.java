@@ -101,9 +101,9 @@ public class CmdProfile {
             for (String id : economyUser.getInventory()) {
                 EconomyItem item = null;
                 try{item = EconomyItem.valueOf(id);}catch (Exception ignored){}
+                if(item == null) item = EconomyItem.UNKNOWN;
                 if(inventory.length() > 0) inventory.append(",   ");
-                if(item == null) inventory.append("**:interrobang: Item Desconhecido**");
-                else inventory.append("**").append(item.getEmote()).append(" ").append(item.getName()).append("**");
+                inventory.append("**").append(item.getEmote()).append(" ").append(item.getName()).append("**");
             }
             embedBuilder.addField("Inventory ("+economyUser.getInventory().size()+"/20):", inventory.toString(), false);
         }else{

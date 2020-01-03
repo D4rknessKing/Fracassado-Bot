@@ -53,7 +53,15 @@ public class CmdItem {
 
                 }else if(wantedItem.getId().equals("OWNROLE")) {
 
-                }else{
+                }else if(wantedItem.getId().equals("AUTODAILY_ON")) {
+                    EconomySystemHandler.useItem(event.getGuild().getId(), event.getAuthor().getId(), wantedItem);
+                    event.getChannel().sendMessage("**Você desativou o seu Auto Daily!**\nA partir de agora você deverá coletar seus bonus diarios manualmente com o comando `-daily`").queue();
+                    EconomySystemHandler.addItem(event.getGuild().getId(), event.getAuthor().getId(), EconomyItem.AUTODAILY_OFF);
+                }else if(wantedItem.getId().equals("AUTODAILY_OFF")) {
+                    EconomySystemHandler.useItem(event.getGuild().getId(), event.getAuthor().getId(), wantedItem);
+                    event.getChannel().sendMessage("**Você ativou o seu Auto Daily!**\nA partir de agora seus bonus diarios serão coletados automaticamente! (Sem contar o streak)").queue();
+                    EconomySystemHandler.addItem(event.getGuild().getId(), event.getAuthor().getId(), EconomyItem.AUTODAILY_ON);
+                }else {
                     event.getChannel().sendMessage("**Error: **Esse item não pode ser utilizado!\n_Para mais informações sobre o funcionamento de um item, digite "+ Config.prefix +"shop info (nome do item)_").queue();
                 }
             }else{

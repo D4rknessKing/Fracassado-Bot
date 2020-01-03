@@ -23,7 +23,7 @@ public class CmdShop {
                 .setColor(event.getMember().getColor())
                 .setFooter("Requested by: " + event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator(), event.getAuthor().getAvatarUrl());
         for(EconomyItem entry : EconomyItem.values()) {
-            embedBuilder.addField(entry.getName(), entry.getEmote()+" _"+entry.getPrice()+"$_\n", true);
+            if(entry.isSellable()) embedBuilder.addField(entry.getName(), entry.getEmote()+" _"+entry.getPrice()+"$_\n", true);
         }
         event.getChannel().sendMessage(embedBuilder.build()).queue();
     }

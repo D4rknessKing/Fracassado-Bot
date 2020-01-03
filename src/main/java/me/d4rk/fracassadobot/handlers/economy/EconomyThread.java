@@ -4,7 +4,10 @@ import com.rethinkdb.gen.ast.Table;
 import javafx.util.Pair;
 import me.d4rk.fracassadobot.Bot;
 import me.d4rk.fracassadobot.handlers.DataHandler;
+import me.d4rk.fracassadobot.utils.RandomUtils;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import org.apache.commons.logging.impl.SimpleLog;
 
 import java.util.*;
@@ -42,6 +45,13 @@ public class EconomyThread {
                                                     userEffects.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
                                                 else {
                                                     log.info("Removing " + hMap.get("key") + " effect from user: " + key);
+                                                    //Aqui checa se o efeito que está removendo é o mute! Caso sim, remove o cargo de mute
+                                                    if(hMap.get("key").equals("DEBUFF_MUTE5M") || hMap.get("key").equals("DEBUFF_MUTE10M")) {
+                                                        Member member = guild.getMemberById(key.toString());
+                                                        Role mute = RandomUtils.getMuteRole(guild);
+                                                        if(member != null && mute != null)
+                                                            guild.removeRoleFromMember(member, mute).queue();
+                                                    }
                                                     DataHandler.database.table("guildEconomy").get(guild.getId()).update(
                                                             DataHandler.r.hashMap(key, DataHandler.r.hashMap("effects", userEffects))
                                                     ).run(DataHandler.conn);
@@ -63,7 +73,10 @@ public class EconomyThread {
                                             guildCooldowns.put(key.toString(), userCooldown);
                                         }else if(keyy.equals("lastDaily")) {
                                             if(System.currentTimeMillis() >= (Long) fMap.get("lastDaily")+86400000) {
-                                                if(((List<String>) fMap.get("inventory")).contains("AUTODAILY")) {
+                                                if(((List<String>) fMap.get("inventory")).contains("AUTODAILY_ON")) {
+                                                    EconomySystemHandler.updateDaily(guild.getId(), key.toString(), true);
+                                                    log.info("Automatically collecting daily bonus for: "+key);
+                                                }else if(((List<String>) fMap.get("inventory")).contains("AUTODAILY")) {
                                                     EconomySystemHandler.useItem(guild.getId(), key.toString(), EconomyItem.AUTODAILY);
                                                     EconomySystemHandler.updateDaily(guild.getId(), key.toString(), true);
                                                     log.info("Automatically collecting daily bonus for: "+key);

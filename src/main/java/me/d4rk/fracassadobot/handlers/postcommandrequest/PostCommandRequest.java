@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class PostCommandRequest {
 
     public enum ENUM {
-        USE_DEBUFF(new PostCommandRequest("Por favor, digite o nome do usuario do qual deseja utilizar o debuff:", "**Error: **Não foi possivel encontrar o usuário. Por favor tente novamente."));
+        USE_DEBUFF(new PostCommandRequest("**Por favor, digite o nome do usuario no qual deseja utilizar o debuff:**"));
 
         private final PostCommandRequest pcr;
 
@@ -20,14 +20,13 @@ public class PostCommandRequest {
 
     private String guildId, info;
     private final long requestTime;
-    private final String requestMessage, errorMessage;
+    private final String requestMessage;
 
-    private PostCommandRequest(String requestMessage, String errorMessage) {
+    private PostCommandRequest(String requestMessage) {
         this.guildId = null;
         this.info = "";
         this.requestTime = 0;
         this.requestMessage = requestMessage;
-        this.errorMessage = errorMessage;
     }
 
     public PostCommandRequest(GuildMessageReceivedEvent event, PostCommandRequest pcr, String info) {
@@ -36,7 +35,6 @@ public class PostCommandRequest {
         this.guildId = event.getGuild().getId();
         this.requestTime = System.currentTimeMillis();
         this.requestMessage = pcr.requestMessage;
-        this.errorMessage = pcr.errorMessage;
     }
 
     public String getGuildId() {
@@ -53,10 +51,6 @@ public class PostCommandRequest {
 
     public String getRequestMessage() {
         return requestMessage;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
     }
 
     public String getId() {

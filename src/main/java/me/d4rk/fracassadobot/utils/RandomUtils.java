@@ -1,11 +1,21 @@
 package me.d4rk.fracassadobot.utils;
 
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.List;
 
 public class RandomUtils {
+
+    public static Role getMuteRole(Guild guild) {
+        if(guild.getRolesByName("Mute", true).size() > 0) {
+            return guild.getRolesByName("Mute", true).get(0);
+        }else{
+            return null;
+        }
+    }
 
     public static Member getMember(GuildMessageReceivedEvent event) {
         Member mem = null;
