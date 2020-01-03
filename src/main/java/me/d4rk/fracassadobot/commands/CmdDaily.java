@@ -1,15 +1,15 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
-import me.d4rk.fracassadobot.utils.EnumPerms;
+import me.d4rk.fracassadobot.core.economy.EconomySystemHandler;
+import me.d4rk.fracassadobot.core.economy.EconomyUser;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
 import me.d4rk.fracassadobot.utils.RandomUtils;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CmdDaily {
 
-    @Command(name="daily", description = "Get your daily dose of coins.", category = "Interaction", usage = "", perms = {EnumPerms.BASE})
+    @Command(name="daily", description = "Get your daily dose of coins.", category = "Interaction", usage = "", perms = {BotPerms.BASE})
     public static void daily(GuildMessageReceivedEvent event, String[] args) {
         EconomyUser user = EconomySystemHandler.getUser(event.getGuild().getId(), event.getAuthor().getId());
         if((System.currentTimeMillis() - user.getLastDaily()) > 86400000) {

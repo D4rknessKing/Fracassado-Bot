@@ -1,12 +1,11 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.utils.Customboard;
+import me.d4rk.fracassadobot.core.customboard.Customboard;
 import me.d4rk.fracassadobot.utils.Emoji;
-import me.d4rk.fracassadobot.handlers.DataHandler;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.Paste;
-import me.d4rk.fracassadobot.utils.command.Command;
-import me.d4rk.fracassadobot.utils.command.SubCommand;
+import me.d4rk.fracassadobot.core.DataHandler;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
+import me.d4rk.fracassadobot.core.command.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -17,7 +16,7 @@ import java.util.List;
 
 public class CmdCustomboard {
 
-    @Command(name="customboard", description = "With the customboard command, you can setup a reaction board of your choice using the emote that you want.", category = "Guild", usage="", perms = {EnumPerms.BASE})
+    @Command(name="customboard", description = "With the customboard command, you can setup a reaction board of your choice using the emote that you want.", category = "Guild", usage="", perms = {BotPerms.BASE})
     public static void run(GuildMessageReceivedEvent event, String[] args) {
 
         HashMap<String, Customboard> customboards = DataHandler.loadGuildCustomboard(event.getGuild().getId());
@@ -42,7 +41,7 @@ public class CmdCustomboard {
         event.getChannel().sendMessage(embed).queue();
     }
 
-    @SubCommand(name="create", description = "", usage = "(name) (emote) (channel) [min]", perms = {EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="create", description = "", usage = "(name) (emote) (channel) [min]", perms = {BotPerms.BASE, BotPerms.GUILD})
     public static void create(GuildMessageReceivedEvent event, String[] args) {
 
         HashMap<String, Customboard> customboards = DataHandler.loadGuildCustomboard(event.getGuild().getId());
@@ -85,7 +84,7 @@ public class CmdCustomboard {
 
     }
 
-    @SubCommand(name="remove", description = "", usage = "(name)", perms = {EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="remove", description = "", usage = "(name)", perms = {BotPerms.BASE, BotPerms.GUILD})
     public static void remove(GuildMessageReceivedEvent event, String[] args){
 
         HashMap<String, Customboard> customboards = DataHandler.loadGuildCustomboard(event.getGuild().getId());

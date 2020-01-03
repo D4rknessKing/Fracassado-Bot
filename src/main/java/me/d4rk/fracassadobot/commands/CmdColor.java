@@ -2,8 +2,8 @@ package me.d4rk.fracassadobot.commands;
 
 import kong.unirest.Unirest;
 import kong.unirest.UnirestException;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -13,7 +13,7 @@ import java.awt.*;
 
 public class CmdColor  {
 
-    @Command(name = "color", description = "Gives you information about a given color", category = "Utils", usage = "(hex/red) [green] [blue]", perms = {EnumPerms.BASE})
+    @Command(name = "color", description = "Gives you information about a given color", category = "Utils", usage = "(hex/red) [green] [blue]", perms = {BotPerms.BASE})
     public static void color(GuildMessageReceivedEvent event, String[] args) {
 
         JSONObject json = null;

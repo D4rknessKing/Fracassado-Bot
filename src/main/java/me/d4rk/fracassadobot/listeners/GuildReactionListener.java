@@ -1,9 +1,9 @@
 package me.d4rk.fracassadobot.listeners;
 
-import me.d4rk.fracassadobot.handlers.LoggingHandler;
-import me.d4rk.fracassadobot.utils.Customboard;
-import me.d4rk.fracassadobot.handlers.CustomboardHandler;
-import me.d4rk.fracassadobot.handlers.DataHandler;
+import me.d4rk.fracassadobot.core.LoggingHandler;
+import me.d4rk.fracassadobot.core.customboard.Customboard;
+import me.d4rk.fracassadobot.core.customboard.CustomboardHandler;
+import me.d4rk.fracassadobot.core.DataHandler;
 import me.d4rk.fracassadobot.utils.ReactionRole;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;

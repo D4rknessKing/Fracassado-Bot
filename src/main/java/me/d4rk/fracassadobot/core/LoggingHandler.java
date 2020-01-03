@@ -1,15 +1,11 @@
-package me.d4rk.fracassadobot.handlers;
+package me.d4rk.fracassadobot.core;
 
 import me.d4rk.fracassadobot.Bot;
 import me.d4rk.fracassadobot.utils.Config;
-import me.d4rk.fracassadobot.utils.Paste;
-import me.d4rk.fracassadobot.utils.RandomUtils;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
-import org.apache.commons.logging.impl.SimpleLog;
 
 public class LoggingHandler {
 

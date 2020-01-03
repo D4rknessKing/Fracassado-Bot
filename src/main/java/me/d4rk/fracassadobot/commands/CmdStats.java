@@ -1,10 +1,10 @@
 package me.d4rk.fracassadobot.commands;
 
 import me.d4rk.fracassadobot.Bot;
-import me.d4rk.fracassadobot.utils.EnumPerms;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
 import me.d4rk.fracassadobot.utils.RandomUtils;
 import me.d4rk.fracassadobot.utils.Stats;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
@@ -18,7 +18,7 @@ public class CmdStats {
     private static double lastProcessCpuTime = 0;
     private static long lastSystemTime = 0;
 
-    @Command(name = "stats", description = "Shows some \"interesting\" statistics about the bot", category = "Utils", usage = "", perms = {EnumPerms.BASE})
+    @Command(name = "stats", description = "Shows some \"interesting\" statistics about the bot", category = "Utils", usage = "", perms = {BotPerms.BASE})
     public static void run(GuildMessageReceivedEvent event, String[] args){
 
         //Adrian porrinha para calcular cpu usage

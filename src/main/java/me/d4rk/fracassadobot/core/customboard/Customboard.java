@@ -1,4 +1,4 @@
-package me.d4rk.fracassadobot.utils;
+package me.d4rk.fracassadobot.core.customboard;
 
 import java.io.Serializable;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package me.d4rk.fracassadobot.handlers.economy;
+package me.d4rk.fracassadobot.core.economy;
 
 public enum EconomyItem {
 
@@ -12,11 +12,11 @@ public enum EconomyItem {
     REVERSE("Reverse Card", "Caso o usuario possua esse item no inventario, quando atacado por um debuff, o debuff automaticamente será enviado de volta (Pode ser afetado por outros reverse cards)", "<:reverse:661686210561048588>", 6000, false, true),
     LOTTERY("Loteria", "Quando utilizado, o usuario tem 1 chance em 10.000 de ganhar 20.000 FracassoCoins", "🧾", 1000, true, true),
     TRASHDAY("Bomba de Tinta", "Ao ser ativado a Bomba de Tinta faz com que todos os membros da guild fiquem por 24hrs com apenas uma cor a ser escolhida pelo comprador", "<:colorificator:661232286280187905>", 30000, true, true),
-    OWNROLE("Role Proprio", "O usuário que utilizar essa perk terá o direito de criar seu próprio cargo escolhendo qualquer nome e cor para ele. O cargo ficará disponível exclusivamente por 1 semana.", "⚙", 15000, true, true, EconomyEffect.OWNROLE),
+    OWNROLE("Role Proprio", "O usuário que utilizar essa perk terá o direito de criar seu próprio cargo escolhendo qualquer nome e cor para ele. O cargo ficará disponível exclusivamente por 1 semana.", "🤴", 15000, true, true, EconomyEffect.OWNROLE),
     AUTODAILY("Auto Daily (1 Dia)", "Ao ter um Auto Daily no seu inventario o bonus daily é automaticamente coletado! (O streak não conta caso o bonus tenha sido coletado por um Auto Daily)", "🤖", 150, false, true),
-    AUTODAILY_ON("Auto Daily (On)", "Ao ter um Auto Daily no seu inventario o bonus daily é automaticamente coletado! (O streak não conta caso o bonus tenha sido coletado por um Auto Daily)", "<:auto_daily_on:662566765636616193>", 15000, true, true),
+    AUTODAILY_ON("Auto Daily", "Ao ter um Auto Daily no seu inventario o bonus daily é automaticamente coletado! (O streak não conta caso o bonus tenha sido coletado por um Auto Daily)", "<:auto_daily_on:662566765636616193>", 15000, true, true),
     AUTODAILY_OFF("Auto Daily (Off)", "Ao ter um Auto Daily no seu inventario o bonus daily é automaticamente coletado! (O streak não conta caso o bonus tenha sido coletado por um Auto Daily)", "<:auto_daily_off:662627546067894273>", 15000, true, false),
-    NUDEDASTAFF("Nude da Staff", "Ao utilizar esse precioso item, você receberá automaticamente na sua inbox um nude exclusivo da equipe do Bonde do Fracasso, fotografado durante nosso \"encontro\" anual", "🔞", 99999999999L, false, true);
+    NUDEDASTAFF("Nude da Staff", "Ao utilizar esse precioso item, você receberá automaticamente na sua inbox um nude exclusivo da equipe do Bonde do Fracasso, fotografado durante nosso \"encontro\" anual", "🔞", 99999999998L, false, true);
 
     private String name, description, emote;
     private long price;

@@ -1,12 +1,9 @@
-package me.d4rk.fracassadobot.handlers;
+package me.d4rk.fracassadobot.core;
 
 import com.rethinkdb.gen.ast.Get;
 import javafx.util.Pair;
 import me.d4rk.fracassadobot.Bot;
-import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyThread;
-import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
-import me.d4rk.fracassadobot.utils.Config;
+import me.d4rk.fracassadobot.core.economy.EconomyThread;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -106,29 +103,36 @@ public class RankSystemHandler {
                 ).run(DataHandler.conn);
             else {
                 long points = (long) entries.get(userId);
-                if(eq > 3) points += 10;
-                else points += eq*3;
+                long newPoints;
+
+                if(eq > 3) newPoints = 10;
+                else newPoints = eq*3;
                 updateUserCooldown(userId);
 
                 //BUFF HANDLING
+                boolean vanish = false;
                 for(Pair<String, Long> pair : EconomyThread.getCachedEffects(guildId, userId)) {
                     switch(pair.getKey()) {
                         case "BUFF_XP2":
-                            points *= 2;
+                            newPoints *= 2;
                             break;
                         case "DEBUFF_XP50":
-                            points *= 0.5;
+                            newPoints *= 0.5;
                             break;
                         case "DEBUFF_XP100":
-                            points = 0;
+                            newPoints = 0;
+                            break;
+                        case "DEBUFF_VANISH":
+                            vanish = true;
                             break;
                         default:
                             break;
                     }
                 }
+                if(vanish) return;
 
                 request.update(
-                        DataHandler.r.hashMap("entries", DataHandler.r.hashMap(userId, points))
+                        DataHandler.r.hashMap("entries", DataHandler.r.hashMap(userId, newPoints+points))
                 ).run(DataHandler.conn);
 
                 LinkedHashMap<String, Long> sortedRoles = getRoles(guildId)

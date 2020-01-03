@@ -1,8 +1,8 @@
 package me.d4rk.fracassadobot.commands;
 
 import me.d4rk.fracassadobot.Bot;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.io.File;
@@ -14,7 +14,7 @@ import java.util.List;
 public class CmdRestart{
 
 
-    @Command(name="restart", description = "Restarts the bot.", category = "Bot Owner", usage = "", perms = {EnumPerms.BASE, EnumPerms.ADMIN})
+    @Command(name="restart", description = "Restarts the bot.", category = "Bot Owner", usage = "", perms = {BotPerms.BASE, BotPerms.ADMIN})
     public static void run(GuildMessageReceivedEvent event, String[] args) {
 
         File currentJar = new File("pls work");

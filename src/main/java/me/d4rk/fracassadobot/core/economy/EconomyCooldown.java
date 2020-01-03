@@ -1,4 +1,4 @@
-package me.d4rk.fracassadobot.handlers.economy;
+package me.d4rk.fracassadobot.core.economy;
 
 public enum EconomyCooldown {
 

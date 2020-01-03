@@ -1,4 +1,4 @@
-package me.d4rk.fracassadobot.handlers.economy;
+package me.d4rk.fracassadobot.core.economy;
 
 public enum EconomyEffect {
 
@@ -8,7 +8,7 @@ public enum EconomyEffect {
     DEBUFF_XP50(21600000),
     DEBUFF_XP100(21600000),
     DEBUFF_VANISH(3600000),
-    OWNROLE(86400000);
+    OWNROLE(604800000);
 
     private final long time;
     private EconomyCooldown cooldown = null;

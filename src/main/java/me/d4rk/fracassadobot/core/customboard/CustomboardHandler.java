@@ -1,6 +1,6 @@
-package me.d4rk.fracassadobot.handlers;
+package me.d4rk.fracassadobot.core.customboard;
 
-import me.d4rk.fracassadobot.utils.Customboard;
+import me.d4rk.fracassadobot.core.DataHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;

@@ -1,7 +1,7 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class CmdGuild {
 
-    @Command(name="guild", description = "Gives some information about the current guild.", category = "Info", usage = "", perms = {EnumPerms.BASE})
+    @Command(name="guild", description = "Gives some information about the current guild.", category = "Info", usage = "", perms = {BotPerms.BASE})
     public static void run(GuildMessageReceivedEvent event, String[] args) {
 
         Guild g = event.getGuild();

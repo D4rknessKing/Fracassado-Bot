@@ -1,9 +1,9 @@
-package me.d4rk.fracassadobot.handlers.postcommandrequest;
+package me.d4rk.fracassadobot.core.postcommandrequest;
 
 import javafx.util.Pair;
-import me.d4rk.fracassadobot.handlers.economy.EconomyItem;
-import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
+import me.d4rk.fracassadobot.core.economy.EconomyItem;
+import me.d4rk.fracassadobot.core.economy.EconomySystemHandler;
+import me.d4rk.fracassadobot.core.economy.EconomyUser;
 import me.d4rk.fracassadobot.utils.RandomUtils;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

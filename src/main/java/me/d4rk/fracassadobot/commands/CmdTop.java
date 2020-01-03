@@ -1,11 +1,11 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.handlers.RankSystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
-import me.d4rk.fracassadobot.utils.command.SubCommand;
+import me.d4rk.fracassadobot.core.RankSystemHandler;
+import me.d4rk.fracassadobot.core.economy.EconomySystemHandler;
+import me.d4rk.fracassadobot.core.economy.EconomyUser;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
+import me.d4rk.fracassadobot.core.command.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -17,11 +17,11 @@ import static java.util.stream.Collectors.toMap;
 
 public class CmdTop {
 
-    @Command(name = "top", description = "Shows some status about the most dedicated members of the guild", category = "Interaction", usage = "null", perms = {EnumPerms.BASE})
+    @Command(name = "top", description = "Shows some status about the most dedicated members of the guild", category = "Interaction", usage = "null", perms = {BotPerms.BASE})
     public static void top(GuildMessageReceivedEvent event, String[] args) {
     }
 
-    @SubCommand(name = "rank", description = "Shows the highest ranked members of the guild", usage = "[page]", perms = {EnumPerms.BASE})
+    @SubCommand(name = "rank", description = "Shows the highest ranked members of the guild", usage = "[page]", perms = {BotPerms.BASE})
     public static void rank(GuildMessageReceivedEvent event, String[] args){
         if(!RankSystemHandler.isSystemEnabled(event.getGuild().getId())) {
             event.getChannel().sendMessage("**Error: **The rank system is not enabled in this guild.").queue();
@@ -88,7 +88,7 @@ public class CmdTop {
     }
 
 
-    @SubCommand(name = "money", description = "See the richest members of the guild", usage = "[page]", perms = {EnumPerms.BASE})
+    @SubCommand(name = "money", description = "See the richest members of the guild", usage = "[page]", perms = {BotPerms.BASE})
     public static void money(GuildMessageReceivedEvent event, String[] args){
         List<EconomyUser> entries = EconomySystemHandler.getUsers(event.getGuild().getId());
         if(entries.size() == 0 ) {

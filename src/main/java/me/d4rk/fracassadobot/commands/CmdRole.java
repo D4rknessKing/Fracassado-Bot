@@ -1,7 +1,7 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CmdRole {
 
-    @Command(name="role", description = "Gives some information about the given role.", category = "Info", usage = "(Role Name/ID)", perms = {EnumPerms.BASE})
+    @Command(name="role", description = "Gives some information about the given role.", category = "Info", usage = "(Role Name/ID)", perms = {BotPerms.BASE})
     public static void run(GuildMessageReceivedEvent event, String[] args) {
 
         String shit = String.join(" ",args);

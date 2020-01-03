@@ -36,10 +36,10 @@ public class JavaEval {
         addImport("net.dv8tion.jda.api.events.message.guild.*");
 
         addImport("me.d4rk.fracassadobot.commands.*");
-        addImport("me.d4rk.fracassadobot.handlers.*");
+        addImport("me.d4rk.fracassadobot.core.*");
         addImport("me.d4rk.fracassadobot.listeners.*");
         addImport("me.d4rk.fracassadobot.utils.*");
-        addImport("me.d4rk.fracassadobot.utils.command.*");
+        addImport("me.d4rk.fracassadobot.core.command.*");
         addImport("me.d4rk.fracassadobot.*");
     }
 

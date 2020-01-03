@@ -1,18 +1,14 @@
-package me.d4rk.fracassadobot.handlers;
+package me.d4rk.fracassadobot.core;
 
 import com.rethinkdb.RethinkDB;
 import com.rethinkdb.gen.ast.Db;
-import com.rethinkdb.gen.exc.ReqlNonExistenceError;
 import com.rethinkdb.net.Connection;
-import com.rethinkdb.net.Cursor;
 import me.d4rk.fracassadobot.utils.Config;
-import me.d4rk.fracassadobot.utils.Customboard;
+import me.d4rk.fracassadobot.core.customboard.Customboard;
 import me.d4rk.fracassadobot.utils.ReactionRole;
-import me.d4rk.fracassadobot.utils.EnumPerms;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
 import org.json.simple.JSONObject;
 
-import java.lang.management.MemoryManagerMXBean;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +37,9 @@ public class DataHandler {
     }
 
     //Permission Stuff
-    static void createGuildUserPerm(String userId, String guildId) {
+    public static void createGuildUserPerm(String userId, String guildId) {
         HashMap<String, List<String>> hashMap = loadGuildPerms(guildId);
-        hashMap.put(userId, Collections.singletonList(EnumPerms.BASE.name()));
+        hashMap.put(userId, Collections.singletonList(BotPerms.BASE.name()));
         saveGuildPerm(guildId, hashMap);
     }
 
@@ -54,7 +50,7 @@ public class DataHandler {
         else return (HashMap<String, List<String>>) map.get("perms");
     }
 
-    static void saveGuildPerm(String guildId, HashMap<String, List<String>> hashMap) {
+    public static void saveGuildPerm(String guildId, HashMap<String, List<String>> hashMap) {
         HashMap map = database.table("guildPerms").get(guildId).run(conn);
 
         if(map == null || map.get("perms") == null) database.table("guildPerms").insert(r.hashMap("perms", hashMap).with("id", guildId)).run(conn);

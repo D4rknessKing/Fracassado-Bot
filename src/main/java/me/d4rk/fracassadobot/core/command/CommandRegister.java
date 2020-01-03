@@ -1,4 +1,4 @@
-package me.d4rk.fracassadobot.utils.command;
+package me.d4rk.fracassadobot.core.command;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

@@ -1,21 +1,21 @@
 package me.d4rk.fracassadobot.commands;
 
 import javafx.util.Pair;
-import me.d4rk.fracassadobot.handlers.economy.EconomyItem;
-import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
-import me.d4rk.fracassadobot.handlers.postcommandrequest.PostCommandRequest;
-import me.d4rk.fracassadobot.handlers.postcommandrequest.PostCommandRequestHandler;
+import me.d4rk.fracassadobot.core.economy.EconomyItem;
+import me.d4rk.fracassadobot.core.economy.EconomySystemHandler;
+import me.d4rk.fracassadobot.core.economy.EconomyUser;
+import me.d4rk.fracassadobot.core.postcommandrequest.PostCommandRequest;
+import me.d4rk.fracassadobot.core.postcommandrequest.PostCommandRequestHandler;
 import me.d4rk.fracassadobot.utils.Config;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.Random;
 
 public class CmdItem {
 
-    @Command(name="item", description = "Efetua o uso de determinado item", category = "Interaction", usage = "(item)", perms = {EnumPerms.BASE})
+    @Command(name="item", description = "Efetua o uso de determinado item", category = "Interaction", usage = "(item)", perms = {BotPerms.BASE})
     public static void item(GuildMessageReceivedEvent event, String[] args) {
         EconomyUser economyUser = EconomySystemHandler.getUser(event.getGuild().getId(), event.getAuthor().getId());
 

@@ -1,6 +1,6 @@
-package me.d4rk.fracassadobot.utils.command;
+package me.d4rk.fracassadobot.core.command;
 
-import me.d4rk.fracassadobot.utils.EnumPerms;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -12,12 +12,12 @@ public class RegisteredCommand {
     private String dsc;
     private String ctg;
     private String use;
-    private List<EnumPerms> prm;
+    private List<BotPerms> prm;
 
     private Method cmd;
     private HashMap<String, RegisteredSubCommand> scm;
 
-    public RegisteredCommand(String name, String description, String category, String usage, List<EnumPerms> perms, Method command, HashMap<String, RegisteredSubCommand> subCommands){
+    public RegisteredCommand(String name, String description, String category, String usage, List<BotPerms> perms, Method command, HashMap<String, RegisteredSubCommand> subCommands){
         nam = name;
         dsc = description;
         ctg = category;
@@ -41,7 +41,7 @@ public class RegisteredCommand {
 
     public String getUsage() { return use; }
 
-    public List<EnumPerms> getPerms(){
+    public List<BotPerms> getPerms(){
         return prm;
     }
 

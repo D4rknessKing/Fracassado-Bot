@@ -1,10 +1,9 @@
 package me.d4rk.fracassadobot.listeners;
 
 import me.d4rk.fracassadobot.Bot;
-import me.d4rk.fracassadobot.handlers.CommandHandler;
-import me.d4rk.fracassadobot.handlers.RankSystemHandler;
-import me.d4rk.fracassadobot.handlers.postcommandrequest.PostCommandRequest;
-import me.d4rk.fracassadobot.handlers.postcommandrequest.PostCommandRequestHandler;
+import me.d4rk.fracassadobot.core.command.CommandHandler;
+import me.d4rk.fracassadobot.core.RankSystemHandler;
+import me.d4rk.fracassadobot.core.postcommandrequest.PostCommandRequestHandler;
 import me.d4rk.fracassadobot.utils.Config;
 import me.d4rk.fracassadobot.utils.Stats;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

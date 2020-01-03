@@ -1,11 +1,11 @@
 package me.d4rk.fracassadobot;
 
-import me.d4rk.fracassadobot.handlers.DataHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyThread;
+import me.d4rk.fracassadobot.core.DataHandler;
+import me.d4rk.fracassadobot.core.economy.EconomyThread;
 import me.d4rk.fracassadobot.listeners.GuildMessageListener;
 import me.d4rk.fracassadobot.listeners.GuildReactionListener;
 import me.d4rk.fracassadobot.utils.Config;
-import me.d4rk.fracassadobot.utils.command.CommandRegistry;
+import me.d4rk.fracassadobot.core.command.CommandRegistry;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;

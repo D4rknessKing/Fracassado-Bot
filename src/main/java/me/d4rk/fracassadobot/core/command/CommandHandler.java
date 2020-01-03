@@ -1,11 +1,8 @@
-package me.d4rk.fracassadobot.handlers;
+package me.d4rk.fracassadobot.core.command;
 
+import me.d4rk.fracassadobot.core.permission.PermissionHandler;
 import me.d4rk.fracassadobot.utils.Config;
-import me.d4rk.fracassadobot.utils.RandomUtils;
 import me.d4rk.fracassadobot.utils.Stats;
-import me.d4rk.fracassadobot.utils.command.CommandRegister;
-import me.d4rk.fracassadobot.utils.command.RegisteredCommand;
-import me.d4rk.fracassadobot.utils.command.RegisteredSubCommand;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 

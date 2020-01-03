@@ -1,10 +1,10 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.handlers.PermissionHandler;
-import me.d4rk.fracassadobot.handlers.DataHandler;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
-import me.d4rk.fracassadobot.utils.command.SubCommand;
+import me.d4rk.fracassadobot.core.permission.PermissionHandler;
+import me.d4rk.fracassadobot.core.DataHandler;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
+import me.d4rk.fracassadobot.core.command.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -16,7 +16,7 @@ import java.util.*;
 
 public class CmdPerm {
 
-    @Command(name="perm", description = "Used to manipulate users perms.", category = "Bot Owner", usage = "(user)", perms = {EnumPerms.BASE})
+    @Command(name="perm", description = "Used to manipulate users perms.", category = "Bot Owner", usage = "(user)", perms = {BotPerms.BASE})
     public static void run(GuildMessageReceivedEvent event, String[] args) {
 
         User usr = stringToUser(String.join(" ",args), event);
@@ -50,12 +50,12 @@ public class CmdPerm {
 
     }
 
-    @SubCommand(name="add", description = "Add a perm to a given user", usage="(perm) (user)", perms={EnumPerms.BASE, EnumPerms.ADMIN})
+    @SubCommand(name="add", description = "Add a perm to a given user", usage="(perm) (user)", perms={BotPerms.BASE, BotPerms.ADMIN})
     public static void add(GuildMessageReceivedEvent event, String[] args) {
 
-        EnumPerms perm;
+        BotPerms perm;
         try {
-            perm = EnumPerms.valueOf(args[0]);
+            perm = BotPerms.valueOf(args[0]);
         } catch (Exception e) {
             event.getChannel().sendMessage("**Error: **Unknown perm!").queue();
             return;
@@ -75,12 +75,12 @@ public class CmdPerm {
 
     }
 
-    @SubCommand(name="remove", description = "Removes a perm from a given user", usage="(perm) (user)", perms={EnumPerms.BASE, EnumPerms.ADMIN})
+    @SubCommand(name="remove", description = "Removes a perm from a given user", usage="(perm) (user)", perms={BotPerms.BASE, BotPerms.ADMIN})
     public static void remove(GuildMessageReceivedEvent event, String[] args){
 
-        EnumPerms perm;
+        BotPerms perm;
         try{
-            perm = EnumPerms.valueOf(args[1]);
+            perm = BotPerms.valueOf(args[1]);
         }catch(Exception e){
             event.getChannel().sendMessage("**Error: **Unknown perm!").queue(); return;
         }

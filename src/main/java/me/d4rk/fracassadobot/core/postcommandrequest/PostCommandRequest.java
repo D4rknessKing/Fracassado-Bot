@@ -1,11 +1,11 @@
-package me.d4rk.fracassadobot.handlers.postcommandrequest;
+package me.d4rk.fracassadobot.core.postcommandrequest;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class PostCommandRequest {
 
     public enum ENUM {
-        USE_DEBUFF(new PostCommandRequest("**Por favor, digite o nome do usuario no qual deseja utilizar o debuff:**"));
+        USE_DEBUFF(new PostCommandRequest("**Por favor, mencione o usuario no qual deseja utilizar o debuff:**"));
 
         private final PostCommandRequest pcr;
 

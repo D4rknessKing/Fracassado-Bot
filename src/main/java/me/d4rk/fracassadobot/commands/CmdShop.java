@@ -1,21 +1,21 @@
 package me.d4rk.fracassadobot.commands;
 
 import me.d4rk.fracassadobot.Bot;
-import me.d4rk.fracassadobot.handlers.economy.EconomyItem;
-import me.d4rk.fracassadobot.handlers.economy.EconomySystemHandler;
-import me.d4rk.fracassadobot.handlers.economy.EconomyUser;
+import me.d4rk.fracassadobot.core.economy.EconomyItem;
+import me.d4rk.fracassadobot.core.economy.EconomySystemHandler;
+import me.d4rk.fracassadobot.core.economy.EconomyUser;
 import me.d4rk.fracassadobot.utils.Config;
 import me.d4rk.fracassadobot.utils.Emoji;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
-import me.d4rk.fracassadobot.utils.command.SubCommand;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
+import me.d4rk.fracassadobot.core.command.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class CmdShop {
 
-    @Command(name="shop", description = "Shows what's up for sale in the bot's shop", category = "Interaction", usage = "", perms = {EnumPerms.BASE})
+    @Command(name="shop", description = "Shows what's up for sale in the bot's shop", category = "Interaction", usage = "", perms = {BotPerms.BASE})
     public static void shop(GuildMessageReceivedEvent event, String[] args){
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setAuthor("Loja do FracassadoBot: ", null, Bot.jda.getSelfUser().getAvatarUrl())
@@ -28,7 +28,7 @@ public class CmdShop {
         event.getChannel().sendMessage(embedBuilder.build()).queue();
     }
 
-    @SubCommand(name="info", description = "Shows a detailed description about a desired item.", usage= "(item)", perms = {EnumPerms.BASE})
+    @SubCommand(name="info", description = "Shows a detailed description about a desired item.", usage= "(item)", perms = {BotPerms.BASE})
     public static void info(GuildMessageReceivedEvent event, String[] args) {
         String shit = String.join(" ",args);
         EconomyItem wantedItem = null;
@@ -47,10 +47,12 @@ public class CmdShop {
             if(emote != null) embed.setThumbnail(emote.getImageUrl());
             else{
                 if(Emoji.getEmojiList().contains(wantedItem.getEmote())) {
+                    System.out.println(wantedItem.getEmote());
                     int unicode = wantedItem.getEmote().codePointAt(0);
                     String unicodeString;
                     if (unicode > 0xFFFF) unicodeString = Integer.toHexString(wantedItem.getEmote().codePointAt(0) | 0x10000);
                     else unicodeString = Integer.toHexString(wantedItem.getEmote().codePointAt(0) | 0x10000).substring(1);
+                    System.out.println(unicodeString);
                     embed.setThumbnail("https://github.com/twitter/twemoji/raw/master/assets/72x72/"+unicodeString+".png");
                 }
             }
@@ -58,7 +60,7 @@ public class CmdShop {
         }
     }
 
-    @SubCommand(name="buy", description = "Buys something from the bot's shop using in-guild currency.", usage = "(item)", perms = {EnumPerms.BASE})
+    @SubCommand(name="buy", description = "Buys something from the bot's shop using in-guild currency.", usage = "(item)", perms = {BotPerms.BASE})
     public static void buy(GuildMessageReceivedEvent event, String[] args) {
         String shit = String.join(" ",args);
         EconomyItem wantedItem = null;

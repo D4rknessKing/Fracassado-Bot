@@ -1,7 +1,7 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CmdUser {
 
-    @Command(name="user", description = "Gives some information about the mentioned user.", category = "Info", usage = "(User ID/Name/Nickname/Mention)", perms = {EnumPerms.BASE})
+    @Command(name="user", description = "Gives some information about the mentioned user.", category = "Info", usage = "(User ID/Name/Nickname/Mention)", perms = {BotPerms.BASE})
     public static void run(GuildMessageReceivedEvent event, String[] args) {
 
         String shit = String.join(" ",args);

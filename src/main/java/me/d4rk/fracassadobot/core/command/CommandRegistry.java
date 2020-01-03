@@ -1,4 +1,4 @@
-package me.d4rk.fracassadobot.utils.command;
+package me.d4rk.fracassadobot.core.command;
 
 import me.d4rk.fracassadobot.commands.*;
 

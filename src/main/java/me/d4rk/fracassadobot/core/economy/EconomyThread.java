@@ -1,9 +1,8 @@
-package me.d4rk.fracassadobot.handlers.economy;
+package me.d4rk.fracassadobot.core.economy;
 
-import com.rethinkdb.gen.ast.Table;
 import javafx.util.Pair;
 import me.d4rk.fracassadobot.Bot;
-import me.d4rk.fracassadobot.handlers.DataHandler;
+import me.d4rk.fracassadobot.core.DataHandler;
 import me.d4rk.fracassadobot.utils.RandomUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;

@@ -1,16 +1,17 @@
-package me.d4rk.fracassadobot.utils.command;
+package me.d4rk.fracassadobot.core.command;
 
-import me.d4rk.fracassadobot.utils.EnumPerms;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SubCommand {
+public @interface Command {
 
     String name();
     String description();
+    String category();
     String usage();
-    EnumPerms[] perms();
+    BotPerms[] perms();
 
 }

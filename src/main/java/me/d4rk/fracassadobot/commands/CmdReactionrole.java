@@ -1,12 +1,11 @@
 package me.d4rk.fracassadobot.commands;
 
 import me.d4rk.fracassadobot.utils.Emoji;
-import me.d4rk.fracassadobot.handlers.DataHandler;
+import me.d4rk.fracassadobot.core.DataHandler;
 import me.d4rk.fracassadobot.utils.ReactionRole;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.Paste;
-import me.d4rk.fracassadobot.utils.command.Command;
-import me.d4rk.fracassadobot.utils.command.SubCommand;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
+import me.d4rk.fracassadobot.core.command.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -17,7 +16,7 @@ import java.util.List;
 
 public class CmdReactionrole {
 
-    @Command(name="reactionrole", description = "With the reactionrole command, you can setup a reaction board that let users choose their roles.", category = "Guild", usage="", perms = {EnumPerms.BASE})
+    @Command(name="reactionrole", description = "With the reactionrole command, you can setup a reaction board that let users choose their roles.", category = "Guild", usage="", perms = {BotPerms.BASE})
     public static void run(GuildMessageReceivedEvent event, String[] args) {
 
         HashMap<String, ReactionRole> reactionrole = DataHandler.loadGuildReactionrole(event.getGuild().getId());
@@ -42,7 +41,7 @@ public class CmdReactionrole {
         event.getChannel().sendMessage(embed).queue();
     }
 
-    @SubCommand(name="create", description = "Create a reaction role board in the desired channel.", usage = "(BoardName) (Channel)", perms = {EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="create", description = "Create a reaction role board in the desired channel.", usage = "(BoardName) (Channel)", perms = {BotPerms.BASE, BotPerms.GUILD})
     public static void create(GuildMessageReceivedEvent event, String[] args) {
 
         HashMap<String, ReactionRole> reactionroles = DataHandler.loadGuildReactionrole(event.getGuild().getId());
@@ -73,7 +72,7 @@ public class CmdReactionrole {
 
     }
 
-    @SubCommand(name="editMsg", description = "Use this command to edit the reaction role board message", usage = "(BoardName) (Title/TitleImg/Description/Image/Footer/Color) (NewValue)", perms = {EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="editMsg", description = "Use this command to edit the reaction role board message", usage = "(BoardName) (Title/TitleImg/Description/Image/Footer/Color) (NewValue)", perms = {BotPerms.BASE, BotPerms.GUILD})
     public static void editMsg(GuildMessageReceivedEvent event, String[] args) {
 
         HashMap<String, ReactionRole> reactionroles = DataHandler.loadGuildReactionrole(event.getGuild().getId());
@@ -136,7 +135,7 @@ public class CmdReactionrole {
 
     }
 
-    @SubCommand(name="addRole", description = "Add a role to the board.", usage = "(Name) (Emoji) (Role)", perms = {EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="addRole", description = "Add a role to the board.", usage = "(Name) (Emoji) (Role)", perms = {BotPerms.BASE, BotPerms.GUILD})
     public static void addRole(GuildMessageReceivedEvent event, String[] args){
 
         HashMap<String, ReactionRole> reactionroles = DataHandler.loadGuildReactionrole(event.getGuild().getId());
@@ -182,7 +181,7 @@ public class CmdReactionrole {
 
     }
 
-    @SubCommand(name="removeRole", description = "Removes a role from the board.", usage = "(Name) (Emoji)", perms = {EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="removeRole", description = "Removes a role from the board.", usage = "(Name) (Emoji)", perms = {BotPerms.BASE, BotPerms.GUILD})
     public static void removeRole(GuildMessageReceivedEvent event, String[] args){
 
         HashMap<String, ReactionRole> reactionroles = DataHandler.loadGuildReactionrole(event.getGuild().getId());
@@ -201,7 +200,7 @@ public class CmdReactionrole {
 
     }
 
-    @SubCommand(name="remove", description = "Remove the desired reaction role board.", usage = "(BoardName)", perms = {EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="remove", description = "Remove the desired reaction role board.", usage = "(BoardName)", perms = {BotPerms.BASE, BotPerms.GUILD})
     public static void remove(GuildMessageReceivedEvent event, String[] args){
 
         HashMap<String, ReactionRole> reactionroles = DataHandler.loadGuildReactionrole(event.getGuild().getId());

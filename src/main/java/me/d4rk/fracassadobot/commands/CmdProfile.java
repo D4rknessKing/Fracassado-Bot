@@ -1,10 +1,10 @@
 package me.d4rk.fracassadobot.commands;
 
 import javafx.util.Pair;
-import me.d4rk.fracassadobot.handlers.economy.*;
-import me.d4rk.fracassadobot.handlers.RankSystemHandler;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
+import me.d4rk.fracassadobot.core.economy.*;
+import me.d4rk.fracassadobot.core.RankSystemHandler;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class CmdProfile {
 
-    @Command(name="profile", description = "Used to see your profile.", category = "Interaction", usage = "[user]", perms = {EnumPerms.BASE})
+    @Command(name="profile", description = "Used to see your profile.", category = "Interaction", usage = "[user]", perms = {BotPerms.BASE})
     public static void profile(GuildMessageReceivedEvent event, String[] args) {
         Member mem = event.getMember();
         if(args.length > 0) {

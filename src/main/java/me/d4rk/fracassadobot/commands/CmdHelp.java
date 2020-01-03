@@ -1,11 +1,11 @@
 package me.d4rk.fracassadobot.commands;
 
 import me.d4rk.fracassadobot.utils.Config;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
-import me.d4rk.fracassadobot.utils.command.CommandRegister;
-import me.d4rk.fracassadobot.utils.command.RegisteredCommand;
-import me.d4rk.fracassadobot.utils.command.RegisteredSubCommand;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
+import me.d4rk.fracassadobot.core.command.CommandRegister;
+import me.d4rk.fracassadobot.core.command.RegisteredCommand;
+import me.d4rk.fracassadobot.core.command.RegisteredSubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageEmbed.Field;
@@ -15,7 +15,7 @@ import java.util.*;
 
 public class CmdHelp {
 
-    @Command(name="help", description = "Mostra isso.", category = "Utils", usage = "[command]", perms = {EnumPerms.BASE})
+    @Command(name="help", description = "Mostra isso.", category = "Utils", usage = "[command]", perms = {BotPerms.BASE})
     public static void help(GuildMessageReceivedEvent event, String[] args) {
         HashMap<String, RegisteredCommand> hashMap = CommandRegister.getCommandMap();
         List<String> argsl = Arrays.asList(args);

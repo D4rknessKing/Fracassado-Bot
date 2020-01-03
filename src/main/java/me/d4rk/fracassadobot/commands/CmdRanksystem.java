@@ -1,9 +1,9 @@
 package me.d4rk.fracassadobot.commands;
 
-import me.d4rk.fracassadobot.handlers.RankSystemHandler;
-import me.d4rk.fracassadobot.utils.EnumPerms;
-import me.d4rk.fracassadobot.utils.command.Command;
-import me.d4rk.fracassadobot.utils.command.SubCommand;
+import me.d4rk.fracassadobot.core.RankSystemHandler;
+import me.d4rk.fracassadobot.core.permission.BotPerms;
+import me.d4rk.fracassadobot.core.command.Command;
+import me.d4rk.fracassadobot.core.command.SubCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -15,11 +15,11 @@ import static java.util.stream.Collectors.toMap;
 
 public class CmdRanksystem {
 
-    @Command(name="ranksystem", description = "", category = "Guild", usage = "null", perms = {EnumPerms.GUILD})
+    @Command(name="ranksystem", description = "", category = "Guild", usage = "null", perms = {BotPerms.GUILD})
     public static void ranksystem(GuildMessageReceivedEvent event, String[] args) {
     }
 
-    @SubCommand(name="enable", description = "Enable the rank system", usage="", perms={EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="enable", description = "Enable the rank system", usage="", perms={BotPerms.BASE, BotPerms.GUILD})
     public static void enable(GuildMessageReceivedEvent event, String[] args) {
         if(RankSystemHandler.isSystemEnabled(event.getGuild().getId())) {
             event.getChannel().sendMessage("**Error: **The rank system is already enabled").queue();
@@ -29,7 +29,7 @@ public class CmdRanksystem {
         }
     }
 
-    @SubCommand(name="disable", description = "Disable the rank system", usage="", perms={EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="disable", description = "Disable the rank system", usage="", perms={BotPerms.BASE, BotPerms.GUILD})
     public static void disable(GuildMessageReceivedEvent event, String[] args) {
         if(!RankSystemHandler.isSystemEnabled(event.getGuild().getId())) {
             event.getChannel().sendMessage("**Error: **The rank system is already disabled").queue();
@@ -39,7 +39,7 @@ public class CmdRanksystem {
         }
     }
 
-    @SubCommand(name="listRoles", description = "List roles configured in the guild rank system", usage = "", perms={EnumPerms.BASE})
+    @SubCommand(name="listRoles", description = "List roles configured in the guild rank system", usage = "", perms={BotPerms.BASE})
     public static void listRoles(GuildMessageReceivedEvent event, String[] args) {
         HashMap<String, Long> roles = RankSystemHandler.getRoles(event.getGuild().getId());
         if(roles.keySet().size() == 0) {
@@ -63,7 +63,7 @@ public class CmdRanksystem {
         ).queue();
     }
 
-    @SubCommand(name="configRoles", description = "Used to configure the rank system", usage="(add/remove) [points] [role]", perms={EnumPerms.BASE, EnumPerms.GUILD})
+    @SubCommand(name="configRoles", description = "Used to configure the rank system", usage="(add/remove) [points] [role]", perms={BotPerms.BASE, BotPerms.GUILD})
     public static void configRoles(GuildMessageReceivedEvent event, String[] args) {
         if(!RankSystemHandler.isSystemEnabled(event.getGuild().getId())) {
             event.getChannel().sendMessage("**Error: **The rank system is not enabled in this guild.").queue();

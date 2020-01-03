@@ -1,10 +1,11 @@
-package me.d4rk.fracassadobot.handlers.economy;
+package me.d4rk.fracassadobot.core.economy;
 
 import com.rethinkdb.gen.ast.Table;
 import com.rethinkdb.model.MapObject;
 import javafx.util.Pair;
 import me.d4rk.fracassadobot.Bot;
-import me.d4rk.fracassadobot.handlers.DataHandler;
+import me.d4rk.fracassadobot.core.DataHandler;
+import me.d4rk.fracassadobot.core.RankSystemHandler;
 import me.d4rk.fracassadobot.utils.RandomUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -121,15 +122,20 @@ public class EconomySystemHandler {
                     DataHandler.r.hashMap(userId, DataHandler.r.hashMap("inventory", userInventory)).with(receiverId, DataHandler.r.hashMap("effects", receiverEffects).with("cooldown", receiverCooldown))
             ).run(DataHandler.conn);
         }
-        //Se o item utilizado foi um de mute muta a pessoa viva
+        //Se o item utilizado foi um de mute muta a pessoa. viva!
         if(item == EconomyItem.DEBUFF_MUTE5M || item == EconomyItem.DEBUFF_MUTE10M) {
             Guild guild = Bot.jda.getGuildById(guildId);
-            if(guild != null) {
-                Member member = guild.getMemberById(userId);
-                Role mute = RandomUtils.getMuteRole(guild);
-                if(member != null && mute != null)
-                    guild.addRoleToMember(member, mute).queue();
+            Member member = guild.getMemberById(receiverId);
+            Role mute = RandomUtils.getMuteRole(guild);
+            if(mute != null) {
+                guild.addRoleToMember(member, mute).queue();
             }
+        }else if(item == EconomyItem.DEBUFF_VANISH && RankSystemHandler.isSystemEnabled(guildId)) {
+            Guild guild = Bot.jda.getGuildById(guildId);
+            Member member = guild.getMemberById(receiverId);
+            for (Role role : member.getRoles())
+                for (String id : RankSystemHandler.getRoles(guildId).keySet())
+                    if(role.getId().equals(id)) guild.removeRoleFromMember(member, role).queue();
         }
 
     }
