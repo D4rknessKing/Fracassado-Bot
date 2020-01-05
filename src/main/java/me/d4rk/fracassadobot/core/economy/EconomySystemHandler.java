@@ -26,13 +26,6 @@ public class EconomySystemHandler {
         for(Object key : map.keySet()) {
             if(map.get(key) instanceof HashMap) {
                 HashMap userMap = (HashMap) map.get(key);
-                List<Pair<String, Long>> userEffects = new ArrayList<>(), userCooldown = new ArrayList<>();
-                for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("effects")) {
-                    userEffects.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
-                }
-                for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("cooldown")) {
-                    userCooldown.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
-                }
                 userList.add(
                     new EconomyUser(
                         key.toString(),
@@ -41,8 +34,8 @@ public class EconomySystemHandler {
                         ((Long) userMap.get("streak")).intValue(),
                         (long) userMap.get("lastStreak"),
                         (List<String>) userMap.get("inventory"),
-                        userEffects,
-                        userCooldown
+                        (List<HashMap<String, Object>>) userMap.get("effects"),
+                        (List<HashMap<String, Object>>)userMap.get("cooldown")
                 ));
             }
         }
@@ -56,13 +49,6 @@ public class EconomySystemHandler {
 
         if(user != null) {
             HashMap userMap = (HashMap) user;
-            List<Pair<String, Long>> userEffects = new ArrayList<>(), userCooldown = new ArrayList<>();
-            for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("effects")) {
-                userEffects.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
-            }
-            for(HashMap<String, Object> hMap : (List<HashMap<String, Object>>) userMap.get("cooldown")) {
-                userCooldown.add(new Pair<>((String) hMap.get("key"), (Long) hMap.get("value")));
-            }
             return new EconomyUser(
                     userId,
                     (long) userMap.get("money"),
@@ -70,8 +56,8 @@ public class EconomySystemHandler {
                     ((Long) userMap.get("streak")).intValue(),
                     (long) userMap.get("lastStreak"),
                     (List<String>) userMap.get("inventory"),
-                    userEffects,
-                    userCooldown
+                    (List<HashMap<String, Object>>) userMap.get("effects"),
+                    (List<HashMap<String, Object>>)userMap.get("cooldown")
             );
         } else {
             createUser(guildId, userId);
@@ -108,11 +94,19 @@ public class EconomySystemHandler {
         EconomyUser effectUser = getUser(guildId, userId);
         EconomyUser effectReceiver = getUser(guildId, receiverId);
         List<String> userInventory = effectUser.getInventory();
-        List<Pair<String, Long>> receiverEffects = effectReceiver.getEffects();
-        List<Pair<String, Long>> receiverCooldown = effectReceiver.getCooldown();
+        List<HashMap<String, Object>> receiverEffects = effectReceiver.getEffects();
+        List<HashMap<String, Object>> receiverCooldown = effectReceiver.getCooldown();
         userInventory.remove(item.getId());
-        receiverEffects.add(new Pair<>(item.getEffect().name(), System.currentTimeMillis()+item.getEffect().getTime()));
-        if(item.getEffect().getCooldown() != null) receiverCooldown.add(new Pair<>(item.getEffect().getCooldown().name(), System.currentTimeMillis()+item.getEffect().getCooldown().getCooldown()));
+        HashMap<String, Object> newEffect = new HashMap<>();
+        newEffect.put("key", item.getEffect().name());
+        newEffect.put("value", System.currentTimeMillis()+item.getEffect().getTime());
+        receiverEffects.add(newEffect);
+        if(item.getEffect().getCooldown() != null) {
+            HashMap<String, Object> newCooldown = new HashMap<>();
+            newCooldown.put("key", item.getEffect().getCooldown().name());
+            newCooldown.put("value", System.currentTimeMillis()+item.getEffect().getCooldown().getCooldown());
+            receiverCooldown.add(newCooldown);
+        }
         if(userId.equals(receiverId)) {
             DataHandler.database.table("guildEconomy").get(guildId).update(
                     DataHandler.r.hashMap(userId, DataHandler.r.hashMap("inventory", userInventory).with("effects", receiverEffects).with("cooldown", receiverCooldown))
@@ -138,6 +132,21 @@ public class EconomySystemHandler {
                     if(role.getId().equals(id)) guild.removeRoleFromMember(member, role).queue();
         }
 
+    }
+
+    public static void useOwnrole(String guildId, String userId, String roleId) {
+        EconomyUser effectUser = getUser(guildId, userId);
+        List<String> userInventory = effectUser.getInventory();
+        List<HashMap<String, Object>> newUserEffects = effectUser.getEffects();
+        userInventory.remove(EconomyItem.OWNROLE.getId());
+        HashMap<String, Object> effect = new HashMap<>();
+        effect.put("key", EconomyItem.OWNROLE.getEffect().name());
+        effect.put("value", System.currentTimeMillis()+EconomyItem.OWNROLE.getEffect().getTime());
+        effect.put("roleId", roleId);
+        newUserEffects.add(effect);
+        DataHandler.database.table("guildEconomy").get(guildId).update(
+                DataHandler.r.hashMap(userId, DataHandler.r.hashMap("inventory", userInventory).with("effects", newUserEffects))
+        ).run(DataHandler.conn);
     }
 
     public static void useItem(String guildId, String userId, EconomyItem item) {

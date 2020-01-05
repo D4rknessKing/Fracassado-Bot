@@ -5,7 +5,9 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class PostCommandRequest {
 
     public enum ENUM {
-        USE_DEBUFF(new PostCommandRequest("**Por favor, mencione o usuario no qual deseja utilizar o debuff:**"));
+        USE_DEBUFF(new PostCommandRequest("**Por favor, mencione o usuario no qual deseja utilizar o debuff:**")),
+        USE_OWNROLE1(new PostCommandRequest("**Por favor, digite o nome do cargo que deseja criar: **")),
+        USE_OWNROLE2(new PostCommandRequest("**Por favor, digite a cor do cargo que deseja criar: (HEX ou R G B)**"));
 
         private final PostCommandRequest pcr;
 
@@ -19,13 +21,11 @@ public class PostCommandRequest {
     }
 
     private String guildId, info;
-    private final long requestTime;
     private final String requestMessage;
 
     private PostCommandRequest(String requestMessage) {
         this.guildId = null;
         this.info = "";
-        this.requestTime = 0;
         this.requestMessage = requestMessage;
     }
 
@@ -33,7 +33,6 @@ public class PostCommandRequest {
         event.getChannel().sendMessage(pcr.requestMessage).queue();
         this.info = info;
         this.guildId = event.getGuild().getId();
-        this.requestTime = System.currentTimeMillis();
         this.requestMessage = pcr.requestMessage;
     }
 
@@ -43,14 +42,6 @@ public class PostCommandRequest {
 
     public String getInfo() {
         return info;
-    }
-
-    public long getRequestTime() {
-        return requestTime;
-    }
-
-    public String getRequestMessage() {
-        return requestMessage;
     }
 
     public String getId() {

@@ -110,7 +110,6 @@ public class RankSystemHandler {
                 updateUserCooldown(userId);
 
                 //BUFF HANDLING
-                boolean vanish = false;
                 for(Pair<String, Long> pair : EconomyThread.getCachedEffects(guildId, userId)) {
                     switch(pair.getKey()) {
                         case "BUFF_XP2":
@@ -123,13 +122,11 @@ public class RankSystemHandler {
                             newPoints = 0;
                             break;
                         case "DEBUFF_VANISH":
-                            vanish = true;
-                            break;
+                            return;
                         default:
                             break;
                     }
                 }
-                if(vanish) return;
 
                 request.update(
                         DataHandler.r.hashMap("entries", DataHandler.r.hashMap(userId, newPoints+points))

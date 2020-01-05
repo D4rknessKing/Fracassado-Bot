@@ -83,12 +83,20 @@ public class CmdProfile {
                 .setColor(mem.getColor())
                 .setFooter("Requested by: " + event.getAuthor().getName() + "#" + event.getAuthor().getDiscriminator(), event.getAuthor().getAvatarUrl());
 
-        if(economyUser.getEffects().size() > 0) {
+        if(economyUser.getEffectsPair().size() > 0) {
             StringBuilder efeitos = new StringBuilder();
-            for (Pair<String, Long> pair : economyUser.getEffects()) {
+            int idx = 0;
+            boolean next = false;
+            for (Pair<String, Long> pair : economyUser.getEffectsPair()) {
+                idx++;
                 EconomyEffect effect = null;
                 try{effect = EconomyEffect.valueOf(pair.getKey());}catch (Exception ignored){}
                 if(efeitos.length() > 0) efeitos.append(",   ");
+                if(next) {
+                    efeitos.append("\n");
+                    next = false;
+                }
+                if(idx % 2 == 0) next = true;
                 if(effect == null) efeitos.append("**:interrobang: Efeito Desconhecido**");
                 else efeitos.append(effect.getItem().getEmote()).append(" (").append((pair.getValue()-System.currentTimeMillis())/60000).append(" Min)");
             }

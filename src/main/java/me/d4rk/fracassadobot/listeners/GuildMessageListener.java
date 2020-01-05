@@ -23,7 +23,7 @@ public class GuildMessageListener extends ListenerAdapter {
                 RankSystemHandler.updateUser(event.getGuild().getId(), event.getAuthor().getId());
                 if(System.currentTimeMillis()-time > 0) System.out.println("Message by "+event.getAuthor().getName()+" took "+(System.currentTimeMillis()-time)+"ms to process.");
             }
-            if(PostCommandRequestHandler.getActivePcr().get(event.getAuthor().getId()) != null) {
+            if(PostCommandRequestHandler.getActivePcr().get(event.getAuthor().getId()) != null && PostCommandRequestHandler.getActivePcr().get(event.getAuthor().getId()).getGuildId().equals(event.getGuild().getId())) {
                 PostCommandRequestHandler.handle(event);
             }else{
                 CommandHandler.handle(event);

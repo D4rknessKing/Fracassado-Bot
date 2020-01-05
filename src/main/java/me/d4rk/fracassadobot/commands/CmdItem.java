@@ -29,10 +29,8 @@ public class CmdItem {
                     PostCommandRequestHandler.addPcr(event.getAuthor().getId(), new PostCommandRequest(event, PostCommandRequest.ENUM.USE_DEBUFF.getPcr(), wantedItem.getId()));
                 else if(wantedItem.getId().startsWith("BUFF")) {
                     boolean containsEffect = false;
-                    System.out.println(economyUser.getEffects());
-                    for(Pair<String, Long> effect : economyUser.getEffects()) {
+                    for(Pair<String, Long> effect : economyUser.getEffectsPair()) {
                         if(wantedItem.getEffect().name().equals(effect.getKey())) containsEffect = true;
-                        System.out.println(wantedItem.getEffect().name()+" - "+effect.getKey());
                     }
                     if(containsEffect) {
                         event.getChannel().sendMessage("**O usuario já possui um buff desse tipo ativo!**").queue();
@@ -52,7 +50,7 @@ public class CmdItem {
                 }else if(wantedItem.getId().equals("TRASHDAY")) {
 
                 }else if(wantedItem.getId().equals("OWNROLE")) {
-
+                    PostCommandRequestHandler.addPcr(event.getAuthor().getId(), new PostCommandRequest(event, PostCommandRequest.ENUM.USE_OWNROLE1.getPcr(), wantedItem.getId()));
                 }else if(wantedItem.getId().equals("AUTODAILY_ON")) {
                     EconomySystemHandler.useItem(event.getGuild().getId(), event.getAuthor().getId(), wantedItem);
                     event.getChannel().sendMessage("**Você desativou o seu Auto Daily!**\nA partir de agora você deverá coletar seus bonus diarios manualmente com o comando `-daily`").queue();
