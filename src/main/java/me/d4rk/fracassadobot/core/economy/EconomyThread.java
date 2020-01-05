@@ -7,7 +7,8 @@ import me.d4rk.fracassadobot.utils.RandomUtils;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
-import org.apache.commons.logging.impl.SimpleLog;
+import net.dv8tion.jda.internal.utils.JDALogger;
+import org.slf4j.Logger;
 
 import java.util.*;
 
@@ -17,7 +18,7 @@ public class EconomyThread {
 
     public static void start() {
 
-        SimpleLog log = new SimpleLog("Economy");
+        Logger log = JDALogger.getLog("EconomyThread");
         log.info("Starting thread!");
 
 

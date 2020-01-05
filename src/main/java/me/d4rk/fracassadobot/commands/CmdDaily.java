@@ -13,9 +13,14 @@ public class CmdDaily {
     public static void daily(GuildMessageReceivedEvent event, String[] args) {
         EconomyUser user = EconomySystemHandler.getUser(event.getGuild().getId(), event.getAuthor().getId());
         if((System.currentTimeMillis() - user.getLastDaily()) > 86400000) {
-            StringBuilder string = new StringBuilder();
+            int streak = user.getStreak();
+            if((System.currentTimeMillis() - user.getLastStreak()) <= 172800000) streak++;
+            else streak = 1;
+
             long newMoney = user.getMoney()+500;
-            if(user.getStreak()+1 == 7) newMoney += 1000;
+            if(streak == 7) newMoney += 1000;
+
+            StringBuilder string = new StringBuilder();
             string.append(
                     ":arrow_right: **Aqui estão suas _:dollar: 500 FracassoCoins :dollar:_ diárias "+
                     event.getAuthor().getAsMention()+"**  \n" + "       Você agora possuí "+newMoney+" moedas!\n\n"
@@ -45,8 +50,8 @@ public class CmdDaily {
                 default:
                     string.append("**Streak: **:red_square: :red_square: :red_square: :red_square: :red_square: :red_square: :red_square:   (0/7)");
             }
-            EconomySystemHandler.updateDaily(event.getGuild().getId(), event.getAuthor().getId(), false);
             event.getChannel().sendMessage(string.toString()).queue();
+            EconomySystemHandler.updateDaily(event.getGuild().getId(), event.getAuthor().getId(), false);
         }else{
             long timeLeft = 86400000-(System.currentTimeMillis() - user.getLastDaily());
             event.getChannel().sendMessage(":x: **Você ainda precisa esperar :clock4: _"+ RandomUtils.getTime(timeLeft) +"_ :clock4: para pegar o seu daily**").queue();

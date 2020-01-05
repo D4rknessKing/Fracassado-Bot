@@ -7,7 +7,9 @@ import me.d4rk.fracassadobot.utils.Config;
 import me.d4rk.fracassadobot.core.customboard.Customboard;
 import me.d4rk.fracassadobot.utils.ReactionRole;
 import me.d4rk.fracassadobot.core.permission.BotPerms;
+import net.dv8tion.jda.internal.utils.JDALogger;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,14 +22,20 @@ public class DataHandler {
     public static Db database = null;
 
     public static void connect(String ip, int port) {
+        Logger log = JDALogger.getLog("DataHandler");
+        log.info("Conectando-se a database em: "+ip+":"+port);
+
         conn = r.connection().hostname(ip).port(port).connect();
         database = r.db(Config.databaseName);
         try { database.info().run(conn); } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Could not connect to database: "+Config.databaseName);
-            System.out.println("Shutting down...");
+            log.error("Could not connect to database: "+Config.databaseName);
+            log.error("Shutting down...");
             System.exit(1);
         }
+
+        log.info("Conectado com sucesso!");
+
         try { database.tableCreate("guildCustomboards").runNoReply(conn); }catch (Exception ignored) {}
         try { database.tableCreate("guildPerms").runNoReply(conn); }catch (Exception ignored) {}
         try { database.tableCreate("guildRankSystem").runNoReply(conn); }catch (Exception ignored) {}

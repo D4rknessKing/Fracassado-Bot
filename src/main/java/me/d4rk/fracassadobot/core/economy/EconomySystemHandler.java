@@ -156,12 +156,12 @@ public class EconomySystemHandler {
         long newStreak = economyUser.getStreak();
         if(!auto) {
             if((System.currentTimeMillis() - economyUser.getLastStreak()) <= 172800000) newStreak++;
-            else newStreak = 0;
+            else newStreak = 1;
             newUser = newUser.with("lastStreak", System.currentTimeMillis());
         }
         if(newStreak >= 7) {
             newUser = newUser.with("money", economyUser.getMoney()+1500);
-            newStreak = 0;
+            newStreak = 1;
         }else{
             newUser = newUser.with("money", economyUser.getMoney()+500);
         }
@@ -174,7 +174,7 @@ public class EconomySystemHandler {
 
     public static void createUser(String guildId, String userId) {
         DataHandler.database.table("guildEconomy").get(guildId).update(
-                DataHandler.r.hashMap(userId, DataHandler.r.hashMap("money", 0).with("lastDaily", System.currentTimeMillis()-86400005).with("streak", 0).with("lastStreak", System.currentTimeMillis()-86400005).with("inventory", DataHandler.r.array()).with("effects", DataHandler.r.array()).with("cooldown", DataHandler.r.array()))
+                DataHandler.r.hashMap(userId, DataHandler.r.hashMap("money", 0).with("lastDaily", System.currentTimeMillis()-86400005).with("streak", 1).with("lastStreak", System.currentTimeMillis()-86400005).with("inventory", DataHandler.r.array()).with("effects", DataHandler.r.array()).with("cooldown", DataHandler.r.array()))
         ).run(DataHandler.conn);
     }
 

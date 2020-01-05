@@ -9,6 +9,8 @@ import me.d4rk.fracassadobot.core.command.CommandRegistry;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.internal.utils.JDALogger;
+import org.slf4j.Logger;
 
 
 public class Bot {
@@ -17,6 +19,10 @@ public class Bot {
 
     public static void main(String[] args) {
 
+        Logger log = JDALogger.getLog("FracassadoBot");
+        log.info("Iniciando bot!");
+
+        log.info("Carregando configuração...");
         Config.loadConfig();
         DataHandler.connect("localhost", 28015);
         CommandRegistry.registerCmds();
