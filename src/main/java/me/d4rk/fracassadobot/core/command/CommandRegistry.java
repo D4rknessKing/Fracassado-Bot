@@ -26,6 +26,7 @@ public class CommandRegistry {
         CommandRegister.register(CmdDaily.class);
         CommandRegister.register(CmdShop.class);
         CommandRegister.register(CmdItem.class);
+        CommandRegister.register(CmdGamble.class);
     }
 
 }
