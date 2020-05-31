@@ -25,7 +25,7 @@ public class CmdDaily {
                     ":arrow_right: **Aqui estão suas _:dollar: 500 FracassoCoins :dollar:_ diárias "+
                     event.getAuthor().getAsMention()+"**  \n" + "       Você agora possuí "+newMoney+" moedas!\n\n"
             );
-            switch (user.getStreak()+1) {
+            switch (streak) {
                 case 1:
                     string.append("**Streak: **:green_square: :red_square: :red_square: :red_square: :red_square: :red_square: :red_square:   (1/7)");
                     break;

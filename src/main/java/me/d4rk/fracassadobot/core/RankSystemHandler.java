@@ -128,6 +128,7 @@ public class RankSystemHandler {
                     }
                 }
 
+                System.out.println("The user: "+userId+" just won "+newPoints+" for sending a message in the guild. ("+EconomyThread.getCachedEffects(guildId, userId)+")");
                 request.update(
                         DataHandler.r.hashMap("entries", DataHandler.r.hashMap(userId, newPoints+points))
                 ).run(DataHandler.conn);

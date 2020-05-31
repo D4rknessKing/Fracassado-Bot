@@ -13,12 +13,9 @@ public class CmdGamble {
 
     private static final Random random = new Random();
 
-    @Command(name = "gamble", description = "Gambles the amount of money you want.", category = "Interaction", usage = "[amount]", perms = {BotPerms.BASE})
+    @Command(name = "gamble", description = "Gambles the amount of money you want.", category = "Interaction", usage = "(amount)", perms = {BotPerms.BASE})
     public static void gamble(GuildMessageReceivedEvent event, String[] args) {
-        if (args.length < 1) {
-            event.getChannel().sendMessage("**Insira uma quantidade de dinheiro para apostar!**").queue();
-            return;
-        }
+
         EconomyUser user = EconomySystemHandler.getUser(event.getGuild().getId(), event.getAuthor().getId());
         int amount;
         try {

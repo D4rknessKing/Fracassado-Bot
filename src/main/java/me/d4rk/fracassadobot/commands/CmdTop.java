@@ -58,21 +58,22 @@ public class CmdTop {
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
         for(int i = 0; i < 10; i++) {
             if(((page*10)-10+i) > entries.keySet().size()-1) break;
-            Member member = event.getGuild().getMemberById((String) sorted.keySet().toArray()[(page*10)-10+i]);
+            String id = (String) sorted.keySet().toArray()[(page*10)-10+i];
+            Member member = event.getGuild().getMemberById(id);
             String name = (member != null) ? member.getEffectiveName() : "The user left the guild.";
             String pos = String.valueOf(((page*10)-10+i+1));
             switch(pos.length()) {
                 case 1:
-                    rank.append("["+pos+"º]    #"+name+"\n        ↳ Points: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º]    #"+name+"\n        ↳ Points: "+sorted.get(id)+"\n");
                     break;
                 case 2:
-                    rank.append("["+pos+"º]   #"+name+"\n        ↳ Points: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º]   #"+name+"\n        ↳ Points: "+sorted.get(id)+"\n");
                     break;
                 case 3:
-                    rank.append("["+pos+"º]  #"+name+"\n        ↳ Points: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º]  #"+name+"\n        ↳ Points: "+sorted.get(id)+"\n");
                     break;
                 default:
-                    rank.append("["+pos+"º] #"+name+"\n        ↳ Points: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º] #"+name+"\n        ↳ Points: "+sorted.get(id)+"\n");
             }
         }
         message.editMessage(
@@ -121,21 +122,22 @@ public class CmdTop {
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
         for(int i = 0; i < 10; i++) {
             if(((page*10)-10+i) > entries.size()-1) break;
-            Member member = event.getGuild().getMemberById((String) sorted.keySet().toArray()[(page*10)-10+i]);
+            String id = (String) sorted.keySet().toArray()[(page*10)-10+i];
+            Member member = event.getGuild().getMemberById(id);
             String name = (member != null) ? member.getEffectiveName() : "The user left the guild.";
             String pos = String.valueOf(((page*10)-10+i+1));
             switch(pos.length()) {
                 case 1:
-                    rank.append("["+pos+"º]    #"+name+"\n        ↳ FracassoCoins: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º]    #"+name+"\n        ↳ FracassoCoins: "+sorted.get(id)+"\n");
                     break;
                 case 2:
-                    rank.append("["+pos+"º]   #"+name+"\n        ↳ FracassoCoins: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º]   #"+name+"\n        ↳ FracassoCoins: "+sorted.get(id)+"\n");
                     break;
                 case 3:
-                    rank.append("["+pos+"º]  #"+name+"\n        ↳ FracassoCoins: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º]  #"+name+"\n        ↳ FracassoCoins: "+sorted.get(id)+"\n");
                     break;
                 default:
-                    rank.append("["+pos+"º] #"+name+"\n        ↳ FracassoCoins: "+sorted.get(member.getId())+"\n");
+                    rank.append("["+pos+"º] #"+name+"\n        ↳ FracassoCoins: "+sorted.get(id)+"\n");
             }
         }
         message.editMessage(
